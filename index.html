@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>¡Español para ti! – Spanisch lernen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo:#AA151B;
+    --rojo-dark:#7E0F14;
+    --oro:#F1BF00;
+    --oro-dark:#C79A00;
+    --azul:#AA151B;
+    --azul-dark:#7E0F14;
+    --verde:#1E8449;
+    --sand:#FFFBEF;
+    --card:#FFFFFF;
+    --ink:#2B2420;
+    --ink-soft:#6B6155;
+    --line:#F1E3B8;
+    --radius:20px;
+    --shadow: 0 10px 28px rgba(43,36,32,0.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Nunito',sans-serif;
+    background:
+      radial-gradient(circle at 12% -10%, rgba(245,166,35,0.25), transparent 45%),
+      radial-gradient(circle at 100% 0%, rgba(14,110,140,0.14), transparent 40%),
+      var(--sand);
+    color:var(--ink);
+    min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:14px 16px 12px;}
+
+  header.top{
+    display:flex;align-items:center;gap:14px;
+    padding:8px 4px 12px;
+  }
+  .flag-dot{
+    width:46px;height:46px;border-radius:14px;flex:none;
+    background:linear-gradient(180deg,#AA151B 0 25%, #F1BF00 25% 75%, #AA151B 75% 100%);
+    box-shadow: var(--shadow);
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+  }
+  h1{
+    font-family:'Baloo 2',sans-serif;
+    font-size:clamp(1.15rem, 4.5vw, 1.6rem);margin:0;color:var(--azul-dark);
+    line-height:1.15;
+  }
+  header.top p{margin:2px 0 0;color:var(--ink-soft);font-size:0.92rem;}
+
+  /* ---------- Übersicht ---------- */
+  .actions-row{display:flex;gap:10px;margin:4px 0 10px;flex-wrap:wrap;}
+  .pill-btn{
+    border:none;border-radius:999px;padding:11px 20px;font-family:'Nunito';font-weight:800;
+    font-size:0.95rem;cursor:pointer;display:flex;align-items:center;gap:8px;
+    box-shadow:var(--shadow);
+  }
+  .pill-btn.quiz{background:var(--rojo);color:#fff;}
+  .pill-btn.reset{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line);box-shadow:none;}
+  .pill-btn.mallorca{background:var(--oro);color:var(--rojo-dark);}
+  .pill-btn.full{width:100%;justify-content:center;}
+
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+  }
+  @media(min-width:520px){ .grid{gap:14px;} }
+
+  .cat-btn{
+    background:var(--card);border:1.5px solid var(--line);border-radius:14px;
+    padding:10px 4px 8px;cursor:pointer;text-align:center;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    box-shadow:var(--shadow);
+    transition:transform .15s ease;
+    position:relative;
+  }
+  @media(min-width:520px){ .cat-btn{border-radius:var(--radius);padding:16px 10px 14px;gap:6px;} }
+  .cat-btn:active{transform:scale(0.96);}
+  .cat-icon{font-size:1.4rem;}
+  @media(min-width:520px){ .cat-icon{font-size:1.9rem;} }
+  .cat-name{font-family:'Baloo 2';font-weight:700;font-size:0.72rem;color:var(--ink);line-height:1.15;}
+  @media(min-width:520px){ .cat-name{font-size:0.98rem;} }
+  .cat-progress-track{width:100%;height:5px;border-radius:6px;background:#F0E4B8;overflow:hidden;margin-top:2px;}
+  .cat-progress-fill{height:100%;background:var(--verde);border-radius:6px;width:0%;transition:width .3s;}
+  .cat-count{font-size:0.58rem;color:var(--ink-soft);font-weight:700;}
+  @media(min-width:520px){ .cat-count{font-size:0.72rem;} }
+  .cat-done-badge{
+    position:absolute;top:4px;right:4px;background:var(--verde);color:#fff;
+    width:15px;height:15px;border-radius:50%;font-size:0.56rem;display:none;
+    align-items:center;justify-content:center;font-weight:800;
+  }
+  @media(min-width:520px){ .cat-done-badge{top:8px;right:8px;width:20px;height:20px;font-size:0.72rem;} }
+
+  /* ---------- Karten-Ansicht ---------- */
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  .back-btn{
+    background:none;border:none;color:var(--azul-dark);font-family:'Nunito';font-weight:800;
+    font-size:0.95rem;cursor:pointer;padding:8px 4px;margin-bottom:8px;display:flex;align-items:center;gap:6px;
+  }
+
+  .progress-bar-outer{height:9px;background:#F0E9DA;border-radius:8px;overflow:hidden;margin:6px 0 14px;}
+  .progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--oro),var(--rojo));border-radius:8px;width:0%;transition:width .35s;}
+
+  .card-stage{
+    background:var(--card);border-radius:24px;box-shadow:var(--shadow);
+    padding:26px 20px 22px;text-align:center;min-height:220px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    border:1.5px solid var(--line);
+    position:relative;
+  }
+  .card-index{position:absolute;top:16px;left:20px;font-size:0.8rem;font-weight:800;color:var(--ink-soft);}
+  .card-cat-icon{position:absolute;top:14px;right:18px;font-size:1.3rem;}
+  .card-es{
+    font-family:'Baloo 2';font-weight:800;font-size:clamp(1.5rem, 6vw, 2.1rem);color:var(--azul-dark);
+    line-height:1.25;
+  }
+  .card-de{
+    font-size:1.15rem;color:var(--ink-soft);font-weight:700;
+    min-height:1.6em;
+  }
+
+  .speak-btn{
+    border:none;background:var(--azul);color:#fff;width:54px;height:54px;border-radius:50%;
+    font-size:1.4rem;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;
+  }
+  .speak-btn:active{transform:scale(0.94);}
+
+  .nav-row{display:flex;gap:10px;margin-top:20px;}
+  .nav-btn{
+    flex:1;border:none;border-radius:16px;padding:14px 8px;font-family:'Nunito';font-weight:800;
+    font-size:0.98rem;cursor:pointer;box-shadow:var(--shadow);
+  }
+  .nav-btn.prev{background:#fff;color:var(--azul-dark);border:1.5px solid var(--line);box-shadow:none;}
+  .nav-btn.stop{background:#fff;color:var(--rojo);border:1.5px solid var(--line);box-shadow:none;flex:0 0 auto;padding:14px 18px;}
+  .nav-btn.next{background:var(--verde);color:#fff;}
+
+  /* ---------- Quiz ---------- */
+  .quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .quiz-score{font-weight:800;color:var(--azul-dark);font-size:0.95rem;}
+  .quiz-question{
+    background:var(--card);border-radius:22px;box-shadow:var(--shadow);border:1.5px solid var(--line);
+    padding:20px 18px;text-align:center;margin-bottom:12px;
+  }
+  .quiz-prompt-label{font-size:0.8rem;color:var(--ink-soft);font-weight:700;margin-bottom:6px;}
+  .quiz-prompt{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.15rem, 5vw, 1.5rem);color:var(--azul-dark);}
+  .quiz-options{display:flex;flex-direction:column;gap:10px;}
+  .quiz-opt{
+    background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;
+    text-align:left;font-family:'Nunito';font-weight:700;font-size:1rem;cursor:pointer;
+  }
+  .quiz-opt.correct{background:#E4F6EA;border-color:var(--verde);color:#1F7A44;}
+  .quiz-opt.wrong{background:#FCE8E3;border-color:var(--rojo);color:#B23A17;}
+  .quiz-opt[disabled]{cursor:default;}
+
+  .quiz-result{
+    background:var(--card);border-radius:26px;box-shadow:var(--shadow);border:1.5px solid var(--line);
+    padding:40px 20px;text-align:center;
+  }
+  .quiz-result .big{font-family:'Baloo 2';font-size:2.6rem;color:var(--azul-dark);font-weight:800;}
+  .quiz-result p{color:var(--ink-soft);font-weight:700;}
+
+  /* ---------- Mallorca-Tipps (einzelne Karten, antippen für weiter) ---------- */
+  .mallorca-card-title{
+    font-family:'Baloo 2';font-weight:800;color:var(--rojo-dark);
+    font-size:clamp(1.15rem, 5vw, 1.5rem);line-height:1.3;
+  }
+  .mallorca-card-text{
+    font-size:1rem;line-height:1.55;color:var(--ink);
+  }
+  .mallorca-speak-btn{
+    position:absolute;top:12px;right:14px;
+    border:none;background:var(--azul);color:#fff;width:40px;height:40px;border-radius:50%;
+    font-size:1.15rem;cursor:pointer;box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mallorca-speak-btn:active{transform:scale(0.94);}
+
+  /* ---------- Footer / Impressum ---------- */
+  footer{
+    max-width:900px;margin:4px auto 0;padding:10px 16px 0;
+    display:flex;gap:18px;justify-content:space-between;flex-wrap:wrap;
+    border-top:1.5px solid var(--line);
+  }
+  footer button{
+    background:none;border:none;color:var(--ink-soft);font-family:'Nunito';font-weight:700;
+    font-size:0.85rem;text-decoration:underline;cursor:pointer;padding:6px;
+  }
+  .footer-copy{
+    color:var(--ink-soft);font-family:'Nunito';font-weight:700;font-size:0.85rem;padding:6px;
+  }
+
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(43,42,40,0.55);
+    align-items:center;justify-content:center;padding:20px;z-index:50;
+  }
+  .modal-overlay.active{display:flex;}
+  .modal-box{
+    background:#fff;border-radius:20px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto;
+    padding:26px 22px;box-shadow:var(--shadow);
+  }
+  .modal-box h2{font-family:'Baloo 2';color:var(--azul-dark);margin-top:0;}
+  .modal-box p{font-size:0.92rem;line-height:1.55;color:var(--ink);}
+  .modal-close{
+    margin-top:10px;background:var(--azul);color:#fff;border:none;border-radius:14px;
+    padding:10px 20px;font-weight:800;cursor:pointer;font-family:'Nunito';
+  }
+
+  .confetti-piece{
+    position:fixed;top:-20px;width:9px;height:14px;opacity:0.9;z-index:99;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform:translateY(110vh) rotate(540deg); opacity:0.4; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cat-btn, .speak-btn, .progress-bar-inner, .cat-progress-fill{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="flag-dot">🇪🇸</div>
+    <div>
+      <h1>¡Español para ti!</h1>
+      <p>Spanisch lernen – Begrüßung, Reisen &amp; Alltag</p>
+    </div>
+  </header>
+
+  <!-- ÜBERSICHT -->
+  <section id="screen-overview" class="screen active">
+    <div class="grid" id="category-grid"></div>
+    <div class="actions-row" style="margin-top:12px;">
+      <button class="pill-btn quiz full" id="btn-start-quiz">🏆 Spanisch-Quiz</button>
+    </div>
+    <div class="actions-row" style="margin-top:6px;">
+      <button class="pill-btn mallorca full" id="btn-open-mallorca">🏝️ Mallorca-Tipps</button>
+    </div>
+  </section>
+
+  <!-- MALLORCA-TIPPS (eigene Vollbild-Seite) -->
+  <section id="screen-mallorca" class="screen">
+    <button class="back-btn" id="btn-back-from-mallorca">← Zurück zur Übersicht</button>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="mallorca-progress-fill"></div></div>
+    <div class="card-stage" id="mallorca-stage">
+      <div class="card-index" id="mallorca-index">1 / 10</div>
+      <button class="mallorca-speak-btn" id="btn-mallorca-speak" title="Vorlesen">🔊</button>
+      <div class="mallorca-card-title" id="mallorca-card-title">📍 Lage &amp; Größe</div>
+      <div class="mallorca-card-text" id="mallorca-card-text">Text</div>
+      <div class="reveal-hint">👉 Antippen für den nächsten Tipp</div>
+    </div>
+  </section>
+
+
+  <!-- LERNKARTEN -->
+  <section id="screen-cards" class="screen">
+    <button class="back-btn" id="btn-back-from-cards">← Zurück zur Übersicht</button>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="card-progress-fill"></div></div>
+    <div class="card-stage" id="card-stage">
+      <div class="card-index" id="card-index">1 / 25</div>
+      <div class="card-cat-icon" id="card-cat-icon">👋</div>
+      <div class="card-es" id="card-es">Hola</div>
+      <button class="speak-btn" id="btn-speak" title="Vorlesen">🔊</button>
+      <div class="card-de" id="card-de">Hallo</div>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn prev" id="btn-prev">← Zurück</button>
+      <button class="nav-btn stop" id="btn-stop">⏹</button>
+      <button class="nav-btn next" id="btn-next">Weiter →</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="screen-quiz" class="screen">
+    <button class="back-btn" id="btn-back-from-quiz">← Zurück zur Übersicht</button>
+    <div class="quiz-head">
+      <div class="quiz-score" id="quiz-progress-label">Frage 1 / 25</div>
+      <div class="quiz-score" id="quiz-score-label">✅ 0</div>
+    </div>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="quiz-progress-fill"></div></div>
+    <div id="quiz-question-area"></div>
+  </section>
+
+  <!-- ERGEBNIS -->
+  <section id="screen-result" class="screen">
+    <div class="quiz-result">
+      <div class="big" id="result-big">20 / 25</div>
+      <p id="result-text">Sehr gut gemacht!</p>
+      <div class="actions-row" style="justify-content:center;margin-top:18px;">
+        <button class="pill-btn quiz" id="btn-quiz-again">🔁 Nochmal testen</button>
+        <button class="pill-btn reset" id="btn-result-back">Zur Übersicht</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <button id="btn-impressum">Impressum</button>
+  <span class="footer-copy">© 2026 v.1.27</span>
+  <button id="btn-datenschutz">Datenschutz</button>
+</footer>
+
+<div class="modal-overlay" id="modal-impressum">
+  <div class="modal-box">
+    <h2>Impressum</h2>
+    <p><strong>Angaben gemäß § 5 TMG</strong><br>
+    Diese App ist ein privates, nicht-kommerzielles Lernprojekt und dient ausschließlich dem persönlichen Sprachenlernen im Familienkreis.</p>
+    <p><strong>Verantwortlich für den Inhalt:</strong><br>Katharina Schütz<br>Potsdam, Deutschland</p>
+    <p><strong>© Katharina Schütz, 2026. Alle Rechte vorbehalten.</strong></p>
+    <p><strong>Hinweis: Testversion 1.2.7</strong><br>
+    Dies ist eine Testversion, die noch nicht vollständig geprüft wurde. Eine Weitergabe an Dritte ist nur mit ausdrücklicher Genehmigung der Entwicklerin gestattet.</p>
+    <p><strong>Hinweis zur Erstellung mithilfe Künstlicher Intelligenz:</strong><br>
+    Diese App wurde mithilfe von Künstlicher Intelligenz (u.&nbsp;a. Google Gemini, Anthropic Claude und OpenAI ChatGPT) erstellt. Inhalte, Übersetzungen und Vokabeln wurden KI-gestützt zusammengestellt. Eine KI kann trotz sorgfältiger Prüfung Fehler machen – bitte prüfen Sie wichtige Übersetzungen im Zweifel zusätzlich selbst, z.&nbsp;B. mit einem Wörterbuch.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-datenschutz">
+  <div class="modal-box">
+    <h2>Datenschutz</h2>
+    <p>Diese App speichert Ihren Lernfortschritt ausschließlich lokal auf Ihrem eigenen Gerät (im Browser-Speicher). Es werden keine Daten an einen Server übertragen, keine Cookies zu Werbezwecken gesetzt und keine personenbezogenen Daten erhoben oder weitergegeben.</p>
+    <p>Die Sprachausgabe nutzt die im Browser eingebaute Sprachfunktion (Web Speech API) Ihres Geräts.</p>
+  </div>
+</div>
+
+<script>
+const CATEGORIES = [{"id": "begruessung", "name": "Begrüßung", "icon": "👋", "cards": [{"es": "Hola", "de": "Hallo"}, {"es": "Buenos días", "de": "Guten Morgen"}, {"es": "Buenas tardes", "de": "Guten Tag"}, {"es": "Buenas noches", "de": "Gute Nacht"}, {"es": "Adiós", "de": "Auf Wiedersehen"}, {"es": "Hasta luego", "de": "Bis später"}, {"es": "Hasta mañana", "de": "Bis morgen"}, {"es": "¿Cómo estás?", "de": "Wie geht es dir?"}, {"es": "Estoy bien, gracias", "de": "Mir geht es gut, danke"}, {"es": "¿Y tú?", "de": "Und dir?"}, {"es": "Mucho gusto", "de": "Freut mich"}, {"es": "¿Cómo te llamas?", "de": "Wie heißt du?"}, {"es": "Me llamo Ana", "de": "Ich heiße Ana"}, {"es": "¿De dónde eres?", "de": "Woher kommst du?"}, {"es": "Soy de Alemania", "de": "Ich komme aus Deutschland"}, {"es": "Por favor", "de": "Bitte"}, {"es": "Gracias", "de": "Danke"}, {"es": "De nada", "de": "Gern geschehen"}, {"es": "Perdón", "de": "Entschuldigung"}, {"es": "Lo siento", "de": "Es tut mir leid"}]}, {"id": "reisen", "name": "Reisen", "icon": "✈️", "cards": [{"es": "El viaje", "de": "Die Reise"}, {"es": "La maleta", "de": "Der Koffer"}, {"es": "El pasaporte", "de": "Der Reisepass"}, {"es": "El billete", "de": "Das Ticket"}, {"es": "¿Dónde está...?", "de": "Wo ist...?"}, {"es": "¿Cuánto cuesta?", "de": "Wie viel kostet das?"}, {"es": "El hotel", "de": "Das Hotel"}, {"es": "La habitación", "de": "Das Zimmer"}, {"es": "Una habitación doble", "de": "Ein Doppelzimmer"}, {"es": "El mapa", "de": "Die Karte"}, {"es": "La estación", "de": "Der Bahnhof"}, {"es": "El tren", "de": "Der Zug"}, {"es": "El autobús", "de": "Der Bus"}, {"es": "El taxi", "de": "Das Taxi"}, {"es": "¿A qué hora sale?", "de": "Wann fährt es ab?"}, {"es": "Necesito ayuda", "de": "Ich brauche Hilfe"}, {"es": "Estoy perdido", "de": "Ich habe mich verlaufen"}, {"es": "La playa", "de": "Der Strand"}, {"es": "Las vacaciones", "de": "Der Urlaub"}, {"es": "Buen viaje", "de": "Gute Reise"}]}, {"id": "schule", "name": "Schule", "icon": "🎒", "cards": [{"es": "La escuela", "de": "Die Schule"}, {"es": "El profesor", "de": "Der Lehrer"}, {"es": "El alumno", "de": "Der Schüler"}, {"es": "La clase", "de": "Der Unterricht"}, {"es": "El libro", "de": "Das Buch"}, {"es": "El cuaderno", "de": "Das Heft"}, {"es": "El lápiz", "de": "Der Bleistift"}, {"es": "La mochila", "de": "Der Schulrucksack"}, {"es": "La pizarra", "de": "Die Tafel"}, {"es": "La tarea", "de": "Die Hausaufgabe"}, {"es": "El examen", "de": "Die Prüfung"}, {"es": "Aprender", "de": "Lernen"}, {"es": "Estudiar", "de": "Studieren"}, {"es": "Escribir", "de": "Schreiben"}, {"es": "Leer", "de": "Lesen"}, {"es": "El recreo", "de": "Die Pause"}, {"es": "La biblioteca", "de": "Die Bibliothek"}, {"es": "El horario", "de": "Der Stundenplan"}, {"es": "La asignatura", "de": "Das Schulfach"}, {"es": "Buena suerte en el examen", "de": "Viel Glück bei der Prüfung"}]}, {"id": "post", "name": "Post", "icon": "✉️", "cards": [{"es": "La oficina de correos", "de": "Die Post"}, {"es": "La carta", "de": "Der Brief"}, {"es": "El sobre", "de": "Der Umschlag"}, {"es": "El sello", "de": "Die Briefmarke"}, {"es": "El paquete", "de": "Das Paket"}, {"es": "El buzón", "de": "Der Briefkasten"}, {"es": "La dirección", "de": "Die Adresse"}, {"es": "Enviar", "de": "Senden"}, {"es": "Recibir", "de": "Empfangen"}, {"es": "¿Cuánto cuesta enviar esto?", "de": "Wie viel kostet der Versand?"}, {"es": "Quiero enviar esta carta a Alemania", "de": "Ich möchte diesen Brief nach Deutschland schicken"}, {"es": "El código postal", "de": "Die Postleitzahl"}, {"es": "Correo urgente", "de": "Eilpost"}, {"es": "La postal", "de": "Die Postkarte"}, {"es": "La ventanilla", "de": "Der Schalter"}, {"es": "Hacer cola", "de": "Schlange stehen"}, {"es": "El formulario", "de": "Das Formular"}, {"es": "Frágil", "de": "Zerbrechlich"}, {"es": "El peso", "de": "Das Gewicht"}, {"es": "La entrega", "de": "Die Zustellung"}]}, {"id": "stadt", "name": "Stadt", "icon": "🏙️", "cards": [{"es": "La ciudad", "de": "Die Stadt"}, {"es": "La calle", "de": "Die Straße"}, {"es": "La plaza", "de": "Der Platz"}, {"es": "El parque", "de": "Der Park"}, {"es": "El museo", "de": "Das Museum"}, {"es": "La iglesia", "de": "Die Kirche"}, {"es": "El mercado", "de": "Der Markt"}, {"es": "La tienda", "de": "Das Geschäft"}, {"es": "El restaurante", "de": "Das Restaurant"}, {"es": "El semáforo", "de": "Die Ampel"}, {"es": "El puente", "de": "Die Brücke"}, {"es": "El edificio", "de": "Das Gebäude"}, {"es": "¿Cómo llego a...?", "de": "Wie komme ich zu...?"}, {"es": "Todo recto", "de": "Geradeaus"}, {"es": "A la derecha", "de": "Nach rechts"}, {"es": "A la izquierda", "de": "Nach links"}, {"es": "Cerca de", "de": "In der Nähe von"}, {"es": "Lejos de", "de": "Weit weg von"}, {"es": "El centro", "de": "Das Zentrum"}, {"es": "Perderse", "de": "Sich verlaufen"}]}, {"id": "land", "name": "Land", "icon": "🌄", "cards": [{"es": "El campo", "de": "Das Land"}, {"es": "El pueblo", "de": "Das Dorf"}, {"es": "La montaña", "de": "Der Berg"}, {"es": "El río", "de": "Der Fluss"}, {"es": "El bosque", "de": "Der Wald"}, {"es": "El lago", "de": "Der See"}, {"es": "La granja", "de": "Der Bauernhof"}, {"es": "El árbol", "de": "Der Baum"}, {"es": "La flor", "de": "Die Blume"}, {"es": "El sendero", "de": "Der Wanderweg"}, {"es": "Dar un paseo", "de": "Spazieren gehen"}, {"es": "El animal", "de": "Das Tier"}, {"es": "La vaca", "de": "Die Kuh"}, {"es": "El caballo", "de": "Das Pferd"}, {"es": "El sol", "de": "Die Sonne"}, {"es": "La colina", "de": "Der Hügel"}, {"es": "El valle", "de": "Das Tal"}, {"es": "La naturaleza", "de": "Die Natur"}, {"es": "El camino", "de": "Der Weg"}, {"es": "Qué paisaje tan bonito", "de": "Was für eine schöne Landschaft"}]}, {"id": "flughafen", "name": "Flughafen", "icon": "🛫", "cards": [{"es": "El aeropuerto", "de": "Der Flughafen"}, {"es": "El vuelo", "de": "Der Flug"}, {"es": "La puerta de embarque", "de": "Das Gate"}, {"es": "La tarjeta de embarque", "de": "Die Bordkarte"}, {"es": "El equipaje de mano", "de": "Das Handgepäck"}, {"es": "Facturar el equipaje", "de": "Das Gepäck einchecken"}, {"es": "El control de seguridad", "de": "Die Sicherheitskontrolle"}, {"es": "La aduana", "de": "Der Zoll"}, {"es": "El pasajero", "de": "Der Passagier"}, {"es": "Despegar", "de": "Starten"}, {"es": "Aterrizar", "de": "Landen"}, {"es": "El retraso", "de": "Die Verspätung"}, {"es": "Cancelado", "de": "Storniert"}, {"es": "La llegada", "de": "Die Ankunft"}, {"es": "La salida del vuelo", "de": "Der Abflug"}, {"es": "¿Dónde está la recogida de equipajes?", "de": "Wo ist die Gepäckausgabe?"}, {"es": "El asiento", "de": "Der Sitzplatz"}, {"es": "Abrocharse el cinturón", "de": "Den Gurt anschnallen"}, {"es": "La escala", "de": "Der Zwischenstopp"}, {"es": "Buen vuelo", "de": "Guten Flug"}]}, {"id": "auto", "name": "Auto", "icon": "🚗", "cards": [{"es": "El coche", "de": "Das Auto"}, {"es": "Alquilar un coche", "de": "Ein Auto mieten"}, {"es": "El carné de conducir", "de": "Der Führerschein"}, {"es": "El seguro", "de": "Die Versicherung"}, {"es": "La gasolina", "de": "Das Benzin"}, {"es": "La gasolinera", "de": "Die Tankstelle"}, {"es": "Llenar el depósito", "de": "Volltanken"}, {"es": "El aparcamiento", "de": "Der Parkplatz"}, {"es": "Aparcar", "de": "Parken"}, {"es": "El cinturón de seguridad", "de": "Der Sicherheitsgurt"}, {"es": "El volante", "de": "Das Lenkrad"}, {"es": "Los frenos", "de": "Die Bremsen"}, {"es": "La avería", "de": "Die Panne"}, {"es": "El límite de velocidad", "de": "Das Tempolimit"}, {"es": "La autopista", "de": "Die Autobahn"}, {"es": "La carretera", "de": "Die Landstraße"}, {"es": "Girar a la derecha", "de": "Rechts abbiegen"}, {"es": "Girar a la izquierda", "de": "Links abbiegen"}, {"es": "El maletero", "de": "Der Kofferraum"}, {"es": "Conduce con cuidado", "de": "Fahr vorsichtig"}]}, {"id": "kueche", "name": "Küche", "icon": "🍳", "cards": [{"es": "La cocina", "de": "Die Küche"}, {"es": "El frigorífico", "de": "Der Kühlschrank"}, {"es": "El horno", "de": "Der Backofen"}, {"es": "La olla", "de": "Der Topf"}, {"es": "La sartén", "de": "Die Pfanne"}, {"es": "El plato", "de": "Der Teller"}, {"es": "El vaso", "de": "Das Glas"}, {"es": "La taza", "de": "Die Tasse"}, {"es": "El cuchillo", "de": "Das Messer"}, {"es": "El tenedor", "de": "Die Gabel"}, {"es": "La cuchara", "de": "Der Löffel"}, {"es": "Cocinar", "de": "Kochen"}, {"es": "Freír", "de": "Braten"}, {"es": "Cortar", "de": "Schneiden"}, {"es": "Lavar los platos", "de": "Das Geschirr spülen"}, {"es": "La mesa", "de": "Der Tisch"}, {"es": "La silla", "de": "Der Stuhl"}, {"es": "El microondas", "de": "Die Mikrowelle"}, {"es": "La receta", "de": "Das Rezept"}, {"es": "Buen provecho", "de": "Guten Appetit"}]}, {"id": "wohnzimmer", "name": "Wohnzimmer", "icon": "🛋️", "cards": [{"es": "El salón", "de": "Das Wohnzimmer"}, {"es": "El sofá", "de": "Das Sofa"}, {"es": "El sillón", "de": "Der Sessel"}, {"es": "La mesa de centro", "de": "Der Couchtisch"}, {"es": "La televisión", "de": "Der Fernseher"}, {"es": "La lámpara", "de": "Die Lampe"}, {"es": "La alfombra", "de": "Der Teppich"}, {"es": "La estantería", "de": "Das Regal"}, {"es": "La ventana", "de": "Das Fenster"}, {"es": "La cortina", "de": "Der Vorhang"}, {"es": "El cuadro", "de": "Das Bild"}, {"es": "Relajarse", "de": "Sich entspannen"}, {"es": "Ver la televisión", "de": "Fernsehen"}, {"es": "Sentarse", "de": "Sich setzen"}, {"es": "El mando a distancia", "de": "Die Fernbedienung"}, {"es": "Cómodo", "de": "Bequem"}, {"es": "Acogedor", "de": "Gemütlich"}, {"es": "La planta", "de": "Die Pflanze"}, {"es": "La puerta", "de": "Die Tür"}, {"es": "Recibir visita", "de": "Besuch empfangen"}]}, {"id": "koerper", "name": "Körper", "icon": "🧍", "cards": [{"es": "La cabeza", "de": "Der Kopf"}, {"es": "El pelo", "de": "Die Haare"}, {"es": "La cara", "de": "Das Gesicht"}, {"es": "Los ojos", "de": "Die Augen"}, {"es": "La nariz", "de": "Die Nase"}, {"es": "La boca", "de": "Der Mund"}, {"es": "Las orejas", "de": "Die Ohren"}, {"es": "El cuello", "de": "Der Hals"}, {"es": "El brazo", "de": "Der Arm"}, {"es": "La mano", "de": "Die Hand"}, {"es": "Los dedos", "de": "Die Finger"}, {"es": "La espalda", "de": "Der Rücken"}, {"es": "La pierna", "de": "Das Bein"}, {"es": "La rodilla", "de": "Das Knie"}, {"es": "El pie", "de": "Der Fuß"}, {"es": "El corazón", "de": "Das Herz"}, {"es": "Me duele la cabeza", "de": "Mir tut der Kopf weh"}, {"es": "Me duele el estómago", "de": "Mir tut der Bauch weh"}, {"es": "Tengo frío", "de": "Mir ist kalt"}, {"es": "Tengo calor", "de": "Mir ist heiß"}]}, {"id": "zahlen", "name": "Zahlen", "icon": "🔢", "cards": [{"es": "Uno", "de": "Eins"}, {"es": "Dos", "de": "Zwei"}, {"es": "Tres", "de": "Drei"}, {"es": "Cuatro", "de": "Vier"}, {"es": "Cinco", "de": "Fünf"}, {"es": "Seis", "de": "Sechs"}, {"es": "Siete", "de": "Sieben"}, {"es": "Ocho", "de": "Acht"}, {"es": "Nueve", "de": "Neun"}, {"es": "Diez", "de": "Zehn"}, {"es": "Once", "de": "Elf"}, {"es": "Doce", "de": "Zwölf"}, {"es": "Quince", "de": "Fünfzehn"}, {"es": "Veinte", "de": "Zwanzig"}, {"es": "Treinta", "de": "Dreißig"}, {"es": "Cincuenta", "de": "Fünfzig"}, {"es": "Cien", "de": "Hundert"}, {"es": "Mil", "de": "Tausend"}, {"es": "El número", "de": "Die Zahl"}, {"es": "¿Cuántos años tienes?", "de": "Wie alt bist du?"}]}, {"id": "farben", "name": "Farben", "icon": "🎨", "cards": [{"es": "Rojo", "de": "Rot"}, {"es": "Azul", "de": "Blau"}, {"es": "Amarillo", "de": "Gelb"}, {"es": "Verde", "de": "Grün"}, {"es": "Naranja", "de": "Orange"}, {"es": "Morado", "de": "Lila"}, {"es": "Rosa", "de": "Rosa"}, {"es": "Blanco", "de": "Weiß"}, {"es": "Negro", "de": "Schwarz"}, {"es": "Gris", "de": "Grau"}, {"es": "Marrón", "de": "Braun"}, {"es": "Claro", "de": "Hell"}, {"es": "Oscuro", "de": "Dunkel"}, {"es": "¿De qué color es?", "de": "Welche Farbe hat das?"}, {"es": "Mi color favorito es...", "de": "Meine Lieblingsfarbe ist..."}, {"es": "El cielo es azul", "de": "Der Himmel ist blau"}, {"es": "La hierba es verde", "de": "Das Gras ist grün"}, {"es": "Multicolor", "de": "Bunt"}, {"es": "La bandera", "de": "Die Flagge"}, {"es": "El color", "de": "Die Farbe"}]}, {"id": "essen", "name": "Essen & Trinken", "icon": "🍽️", "cards": [{"es": "El pan", "de": "Das Brot"}, {"es": "El agua", "de": "Das Wasser"}, {"es": "El vino", "de": "Der Wein"}, {"es": "La fruta", "de": "Das Obst"}, {"es": "La manzana", "de": "Der Apfel"}, {"es": "La verdura", "de": "Das Gemüse"}, {"es": "La carne", "de": "Das Fleisch"}, {"es": "El pescado", "de": "Der Fisch"}, {"es": "El queso", "de": "Der Käse"}, {"es": "El huevo", "de": "Das Ei"}, {"es": "La sopa", "de": "Die Suppe"}, {"es": "La ensalada", "de": "Der Salat"}, {"es": "El desayuno", "de": "Das Frühstück"}, {"es": "El almuerzo", "de": "Das Mittagessen"}, {"es": "La cena", "de": "Das Abendessen"}, {"es": "Tengo hambre", "de": "Ich habe Hunger"}, {"es": "Tengo sed", "de": "Ich habe Durst"}, {"es": "Está delicioso", "de": "Es ist köstlich"}, {"es": "La cuenta, por favor", "de": "Die Rechnung, bitte"}, {"es": "Salud", "de": "Zum Wohl"}]}, {"id": "wetter", "name": "Wetter", "icon": "☀️", "cards": [{"es": "El tiempo", "de": "Das Wetter"}, {"es": "Hace sol", "de": "Es ist sonnig"}, {"es": "Hace calor", "de": "Es ist heiß"}, {"es": "Hace frío", "de": "Es ist kalt"}, {"es": "Llueve", "de": "Es regnet"}, {"es": "Nieva", "de": "Es schneit"}, {"es": "Hay viento", "de": "Es ist windig"}, {"es": "Está nublado", "de": "Es ist bewölkt"}, {"es": "La lluvia", "de": "Der Regen"}, {"es": "La nieve", "de": "Der Schnee"}, {"es": "El viento", "de": "Der Wind"}, {"es": "La nube", "de": "Die Wolke"}, {"es": "El paraguas", "de": "Der Regenschirm"}, {"es": "Hace buen tiempo", "de": "Es ist schönes Wetter"}, {"es": "Hace mal tiempo", "de": "Es ist schlechtes Wetter"}, {"es": "La temperatura", "de": "Die Temperatur"}, {"es": "El verano", "de": "Der Sommer"}, {"es": "El invierno", "de": "Der Winter"}, {"es": "La primavera", "de": "Der Frühling"}, {"es": "El otoño", "de": "Der Herbst"}]}, {"id": "zeit", "name": "Zeit", "icon": "⏰", "cards": [{"es": "La hora", "de": "Die Uhrzeit"}, {"es": "¿Qué hora es?", "de": "Wie spät ist es?"}, {"es": "Son las tres", "de": "Es ist drei Uhr"}, {"es": "El minuto", "de": "Die Minute"}, {"es": "El día", "de": "Der Tag"}, {"es": "La semana", "de": "Die Woche"}, {"es": "El mes", "de": "Der Monat"}, {"es": "El año", "de": "Das Jahr"}, {"es": "Hoy", "de": "Heute"}, {"es": "Mañana", "de": "Morgen"}, {"es": "Ayer", "de": "Gestern"}, {"es": "Ahora", "de": "Jetzt"}, {"es": "Más tarde", "de": "Später"}, {"es": "Pronto", "de": "Bald"}, {"es": "Siempre", "de": "Immer"}, {"es": "Nunca", "de": "Nie"}, {"es": "Temprano", "de": "Früh"}, {"es": "Tarde", "de": "Spät"}, {"es": "El fin de semana", "de": "Das Wochenende"}, {"es": "La noche", "de": "Die Nacht"}]}];
+</script>
+<script>
+/* ===== Zustand ===== */
+let currentCategory = null;
+let currentIndex = 0;
+let progress = loadProgress();
+
+let quizQuestions = [];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+/* ===== Fortschritt (localStorage) ===== */
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem('esParaTiProgress');
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveProgress(){
+  try{ localStorage.setItem('esParaTiProgress', JSON.stringify(progress)); }catch(e){}
+}
+function markSeen(catId, idx){
+  if(!progress[catId]) progress[catId] = [];
+  if(!progress[catId].includes(idx)) progress[catId].push(idx);
+  saveProgress();
+}
+function catProgressCount(catId){
+  return (progress[catId] || []).length;
+}
+
+/* ===== Übersicht rendern ===== */
+function renderOverview(){
+  const grid = document.getElementById('category-grid');
+  grid.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const done = catProgressCount(cat.id);
+    const total = cat.cards.length;
+    const pct = Math.round((done/total)*100);
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.innerHTML = `
+      <div class="cat-done-badge" style="${pct>=100?'display:flex;':''}">✓</div>
+      <div class="cat-icon">${cat.icon}</div>
+      <div class="cat-name">${cat.name}</div>
+      <div class="cat-progress-track"><div class="cat-progress-fill" style="width:${pct}%"></div></div>
+      <div class="cat-count">${done} / ${total}</div>
+    `;
+    btn.addEventListener('click', () => openCategory(cat.id));
+    grid.appendChild(btn);
+  });
+}
+
+/* ===== Bildschirme wechseln ===== */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant':'auto'});
+}
+
+/* ===== Sprachausgabe ===== */
+// Auf manchen Android/iOS-Browsern sind die Stimmen beim ersten Aufruf noch
+// nicht geladen, wodurch speak() dann lautlos nichts tut. Deshalb Stimmen
+// vorladen und die beste spanische bzw. deutsche Stimme merken.
+let esVoice = null;
+let deVoice = null;
+function loadVoices(){
+  if(!('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  if(voices && voices.length){
+    esVoice = voices.find(v => /^es(-|_|$)/i.test(v.lang)) || null;
+    deVoice = voices.find(v => /^de(-|_|$)/i.test(v.lang)) || null;
+  }
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speakText(text, lang, voice, attempt){
+  if(!('speechSynthesis' in window)) return;
+  try{
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    if(voice) u.voice = voice;
+    u.rate = 0.92;
+    // Kleine Verzögerung: manche Android-Browser brauchen einen Moment,
+    // nachdem cancel() aufgerufen wurde, bevor speak() zuverlässig greift.
+    setTimeout(() => {
+      try{ window.speechSynthesis.speak(u); }catch(e){}
+    }, 80);
+    // Falls beim allerersten Aufruf noch keine Stimmen geladen waren,
+    // nach kurzer Zeit einmal automatisch erneut versuchen.
+    if(!voice && !attempt){
+      setTimeout(() => { loadVoices(); speakText(text, lang, lang==='es-ES'?esVoice:deVoice, true); }, 400);
+    }
+  }catch(e){ /* Sprachausgabe evtl. nicht verfügbar */ }
+}
+
+function speak(text){ speakText(text, 'es-ES', esVoice); }
+function speakDe(text){ speakText(text, 'de-DE', deVoice); }
+
+/* ===== Lernkarten ===== */
+function openCategory(catId){
+  currentCategory = CATEGORIES.find(c => c.id === catId);
+  currentIndex = 0;
+  showScreen('screen-cards');
+  renderCard();
+}
+
+function renderCard(){
+  const cat = currentCategory;
+  const card = cat.cards[currentIndex];
+  document.getElementById('card-index').textContent = `${currentIndex+1} / ${cat.cards.length}`;
+  document.getElementById('card-cat-icon').textContent = cat.icon;
+  document.getElementById('card-es').textContent = card.es;
+  document.getElementById('card-de').textContent = card.de;
+  const pct = Math.round(((currentIndex+1)/cat.cards.length)*100);
+  document.getElementById('card-progress-fill').style.width = pct + '%';
+  markSeen(cat.id, currentIndex);
+  speak(card.es);
+}
+
+document.getElementById('card-stage').addEventListener('click', (e) => {
+  if(e.target.id === 'btn-speak') return;
+  speak(currentCategory.cards[currentIndex].es);
+});
+
+document.getElementById('btn-speak').addEventListener('click', (e) => {
+  e.stopPropagation();
+  speak(currentCategory.cards[currentIndex].es);
+});
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  if(currentIndex < currentCategory.cards.length - 1){
+    currentIndex++;
+    renderCard();
+  }else{
+    showScreen('screen-overview');
+    renderOverview();
+  }
+});
+document.getElementById('btn-prev').addEventListener('click', () => {
+  if(currentIndex > 0){
+    currentIndex--;
+    renderCard();
+  }
+});
+document.getElementById('btn-stop').addEventListener('click', () => {
+  window.speechSynthesis.cancel();
+});
+document.getElementById('btn-back-from-cards').addEventListener('click', () => {
+  window.speechSynthesis.cancel();
+  showScreen('screen-overview');
+  renderOverview();
+});
+
+/* ===== Quiz ===== */
+function buildQuizQuestions(){
+  const all = [];
+  CATEGORIES.forEach(cat => {
+    cat.cards.forEach(card => all.push({es: card.es, de: card.de, icon: cat.icon}));
+  });
+  // Eine zufällige Karte pro Rubrik auswählen -> 16 Fragen, gleichmäßig verteilt
+  const chosen = CATEGORIES.map(cat => {
+    const card = cat.cards[Math.floor(Math.random()*cat.cards.length)];
+    return {es: card.es, de: card.de, icon: cat.icon};
+  });
+  shuffle(chosen);
+  // Immer Spanisch -> Deutsch fragen, damit jede Frage zuverlässig vorgelesen wird
+  return chosen.map(q => {
+    const wrongPool = all.filter(x => x.de !== q.de);
+    shuffle(wrongPool);
+    const wrongs = wrongPool.slice(0,3).map(x => x.de);
+    const options = shuffle([q.de, ...wrongs]);
+    return { prompt: q.es, correctAnswer: q.de, options, icon: q.icon };
+  });
+}
+function shuffle(arr){
+  for(let i = arr.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+document.getElementById('btn-start-quiz').addEventListener('click', startQuiz);
+document.getElementById('btn-quiz-again').addEventListener('click', startQuiz);
+
+function startQuiz(){
+  quizQuestions = buildQuizQuestions();
+  quizIndex = 0;
+  quizScore = 0;
+  showScreen('screen-quiz');
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion(){
+  quizAnswered = false;
+  const q = quizQuestions[quizIndex];
+  document.getElementById('quiz-progress-label').textContent = `Frage ${quizIndex+1} / ${quizQuestions.length}`;
+  document.getElementById('quiz-score-label').textContent = `✅ ${quizScore}`;
+  document.getElementById('quiz-progress-fill').style.width = Math.round((quizIndex/quizQuestions.length)*100) + '%';
+
+  const area = document.getElementById('quiz-question-area');
+  area.innerHTML = `
+    <div class="quiz-question">
+      <div class="quiz-prompt-label">${q.icon} Was bedeutet das auf Deutsch?</div>
+      <div class="quiz-prompt">${q.prompt}</div>
+    </div>
+    <div class="quiz-options" id="quiz-options"></div>
+  `;
+  const optWrap = document.getElementById('quiz-options');
+  q.options.forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt';
+    b.textContent = opt;
+    b.addEventListener('click', () => selectQuizAnswer(opt, b));
+    optWrap.appendChild(b);
+  });
+
+  speak(q.prompt);
+}
+
+function selectQuizAnswer(chosen, btnEl){
+  if(quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQuestions[quizIndex];
+  const buttons = document.querySelectorAll('.quiz-opt');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if(b.textContent === q.correctAnswer) b.classList.add('correct');
+  });
+  if(chosen === q.correctAnswer){
+    quizScore++;
+    document.getElementById('quiz-score-label').textContent = `✅ ${quizScore}`;
+  }else{
+    btnEl.classList.add('wrong');
+  }
+
+  setTimeout(() => {
+    quizIndex++;
+    if(quizIndex < quizQuestions.length){
+      renderQuizQuestion();
+    }else{
+      finishQuiz();
+    }
+  }, 1100);
+}
+
+function finishQuiz(){
+  document.getElementById('quiz-progress-fill').style.width = '100%';
+  showScreen('screen-result');
+  document.getElementById('result-big').textContent = `${quizScore} / ${quizQuestions.length}`;
+  let text;
+  if(quizScore === quizQuestions.length){
+    text = '¡Perfecto! Alle richtig! 🎉';
+    fireConfetti();
+    playFanfare();
+  }else if(quizScore >= quizQuestions.length * 0.7){
+    text = '¡Muy bien! Sehr gut gemacht!';
+  }else if(quizScore >= quizQuestions.length * 0.4){
+    text = 'Guter Anfang – weiter üben lohnt sich!';
+  }else{
+    text = 'Nicht aufgeben – Übung macht den Meister!';
+  }
+  document.getElementById('result-text').textContent = text;
+}
+
+document.getElementById('btn-back-from-quiz').addEventListener('click', () => {
+  window.speechSynthesis.cancel();
+  showScreen('screen-overview');
+  renderOverview();
+});
+document.getElementById('btn-result-back').addEventListener('click', () => {
+  showScreen('screen-overview');
+  renderOverview();
+});
+
+/* ===== Spanische Flagge fällt bei 100% ===== */
+function fireConfetti(){
+  const colors = ['#AA151B','#F1BF00','#AA151B','#F1BF00','#FFFFFF'];
+  for(let i=0;i<70;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random()*100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDuration = (2.2 + Math.random()*1.6) + 's';
+    piece.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 4200);
+  }
+  // ein paar große Flaggen-Symbole fallen zusätzlich herunter
+  for(let i=0;i<6;i++){
+    const flag = document.createElement('div');
+    flag.textContent = '🇪🇸';
+    flag.className = 'confetti-piece';
+    flag.style.left = (10 + Math.random()*80) + 'vw';
+    flag.style.fontSize = '2.4rem';
+    flag.style.background = 'transparent';
+    flag.style.width = 'auto';
+    flag.style.height = 'auto';
+    flag.style.animationDuration = (2.6 + Math.random()*1.4) + 's';
+    flag.style.animationDelay = (Math.random()*0.6) + 's';
+    document.body.appendChild(flag);
+    setTimeout(() => flag.remove(), 4800);
+  }
+}
+
+/* ===== Kleine Fanfare (Web Audio, keine Audiodatei nötig) ===== */
+function playFanfare(){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5-E5-G5-C6
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      const start = ctx.currentTime + i*0.16;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(0.35, start+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, start+0.4);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start+0.42);
+    });
+    // kleiner Tamtam-Schlag am Ende
+    const drum = ctx.createOscillator();
+    const dGain = ctx.createGain();
+    drum.type = 'sine';
+    drum.frequency.value = 90;
+    const dStart = ctx.currentTime + 0.16*notes.length;
+    dGain.gain.setValueAtTime(0.5, dStart);
+    dGain.gain.exponentialRampToValueAtTime(0.001, dStart+0.5);
+    drum.connect(dGain).connect(ctx.destination);
+    drum.start(dStart);
+    drum.stop(dStart+0.5);
+  }catch(e){ /* Web Audio evtl. nicht verfügbar */ }
+}
+
+/* ===== Mallorca-Tipps (Einzelkarten, antippen = weiter) ===== */
+const MALLORCA_INFO = [
+  { title: "📍 Lage & Größe", text: "Mallorca ist mit rund 3.640 km² die größte Insel der Balearen im westlichen Mittelmeer, umgeben von etwa 550 km Küste. Von Deutschland aus ist sie in gut 2 bis 2,5 Flugstunden erreichbar." },
+  { title: "🏛️ Hauptstadt Palma", text: "Palma de Mallorca ist die Hauptstadt der Insel. Hier leben mit rund 443.000 Menschen fast die Hälfte aller Insulaner. Sehenswert sind die gotische Kathedrale La Seu direkt am Meer, die verwinkelte Altstadt und der Königspalast Almudaina." },
+  { title: "👥 Wie viele Menschen leben hier?", text: "Auf Mallorca leben inzwischen rund 980.000 Menschen (Stand 2026) – vor 75 Jahren waren es nur etwa 340.000. Viele Bewohner sind mittlerweile aus dem Ausland zugezogen, darunter auch viele Deutsche." },
+  { title: "🗣️ Sprache", text: "Amtssprachen sind Spanisch (Kastilisch) und Katalanisch. Auf Mallorca wird zusätzlich ein eigener Dialekt gesprochen, das Mallorquinische. Straßenschilder und Speisekarten zeigen daher oft beide Sprachvarianten." },
+  { title: "⛰️ Serra de Tramuntana", text: "Das Gebirge im Nordwesten der Insel ist UNESCO-Weltnaturerbe, mit dem höchsten Berg Puig Major (1.445 m). Sehr beliebt ist die historische Zugfahrt von Palma nach Sóller, vorbei an Orangenhainen und durch alte Tunnel." },
+  { title: "🏖️ Ca'n Picafort (Norden)", text: "Ein familienfreundlicher Ferienort an der Bucht von Alcúdia im Norden der Insel, mit langem, flach abfallendem Sandstrand und gemütlicher Strandpromenade. Rund 6.000 Menschen leben hier fest, der Ort ist besonders bei deutschen Familien beliebt." },
+  { title: "⛵ Puerto Pollença (Norden)", text: "Ebenfalls im Norden liegt dieser ruhigere Hafenort mit hübscher Strandpromenade und dem malerischen „Piniengang\". Von hier aus lohnt sich ein Ausflug zum Kap Formentor mit seinen berühmten Aussichtspunkten." },
+  { title: "🌊 Strände im Süden bei Palma", text: "Nur eine kurze Fahrt von Palma entfernt locken feine Sandstrände: Es Trenc mit türkisfarbenem Wasser und Karibik-Flair, die belebte Playa de Palma und die kleine, fjordartige Bucht Cala Pi." },
+  { title: "🍽️ Kulinarische Spezialitäten", text: "Typisch mallorquinisch sind die süße Ensaimada, die würzige Streichwurst Sobrasada, Pa amb oli (Brot mit Olivenöl und Tomate) sowie der herzhafte Gemüseeintopf Tumbet." },
+  { title: "📸 Was man gesehen haben sollte", text: "Die Kathedrale La Seu in Palma, die Tropfsteinhöhlen Cuevas del Drach bei Porto Cristo, die Steilküste am Kap Formentor und ein gemütlicher Bummel durch die Altstadt von Palma." },
+];
+let mallorcaIndex = 0;
+
+function renderMallorcaCard(){
+  const info = MALLORCA_INFO[mallorcaIndex];
+  document.getElementById('mallorca-index').textContent = `${mallorcaIndex+1} / ${MALLORCA_INFO.length}`;
+  document.getElementById('mallorca-card-title').textContent = info.title;
+  document.getElementById('mallorca-card-text').textContent = info.text;
+  const pct = Math.round(((mallorcaIndex+1)/MALLORCA_INFO.length)*100);
+  document.getElementById('mallorca-progress-fill').style.width = pct + '%';
+}
+
+document.getElementById('mallorca-stage').addEventListener('click', (e) => {
+  if(e.target.closest('#btn-mallorca-speak')) return;
+  mallorcaIndex = (mallorcaIndex + 1) % MALLORCA_INFO.length;
+  renderMallorcaCard();
+});
+
+document.getElementById('btn-mallorca-speak').addEventListener('click', (e) => {
+  e.stopPropagation();
+  const info = MALLORCA_INFO[mallorcaIndex];
+  speakDe(`${info.title.replace(/[^\p{L}\s.,äöüßÄÖÜ]/gu,'')}. ${info.text}`);
+});
+
+document.getElementById('btn-open-mallorca').addEventListener('click', () => {
+  mallorcaIndex = 0;
+  renderMallorcaCard();
+  showScreen('screen-mallorca');
+});
+document.getElementById('btn-back-from-mallorca').addEventListener('click', () => {
+  showScreen('screen-overview');
+});
+
+/* ===== Impressum / Datenschutz Modals ===== */
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+
+document.getElementById('btn-impressum').addEventListener('click', () => openModal('modal-impressum'));
+document.getElementById('btn-datenschutz').addEventListener('click', () => openModal('modal-datenschutz'));
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) overlay.classList.remove('active');
+  });
+});
+
+/* Schließen-Buttons in Modals nachtragen */
+document.querySelectorAll('.modal-box').forEach(box => {
+  const btn = document.createElement('button');
+  btn.className = 'modal-close';
+  btn.textContent = 'Schließen';
+  btn.addEventListener('click', () => box.closest('.modal-overlay').classList.remove('active'));
+  box.appendChild(btn);
+});
+
+/* ===== Start ===== */
+renderOverview();
+
+</script>
+</body>
+</html>
