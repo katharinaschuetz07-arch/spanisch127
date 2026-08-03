@@ -38,21 +38,22 @@
   .wrap{max-width:900px;margin:0 auto;padding:14px 16px 12px;}
 
   header.top{
-    display:flex;align-items:center;gap:14px;
-    padding:8px 4px 12px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:8px 0 12px;
   }
+  .header-center{flex:1;text-align:center;min-width:0;}
   .flag-dot{
-    width:46px;height:46px;border-radius:14px;flex:none;
+    width:40px;height:40px;border-radius:12px;flex:none;
     background:linear-gradient(180deg,#AA151B 0 25%, #F1BF00 25% 75%, #AA151B 75% 100%);
     box-shadow: var(--shadow);
-    display:flex;align-items:center;justify-content:center;font-size:22px;
+    display:flex;align-items:center;justify-content:center;font-size:19px;
   }
   h1{
     font-family:'Baloo 2',sans-serif;
-    font-size:clamp(1.15rem, 4.5vw, 1.6rem);margin:0;color:var(--azul-dark);
+    font-size:clamp(1.1rem, 4.5vw, 1.5rem);margin:0;color:var(--azul-dark);
     line-height:1.15;
   }
-  header.top p{margin:2px 0 0;color:var(--ink-soft);font-size:0.92rem;}
+  .version-tag{margin:2px 0 0;color:var(--rojo);font-size:0.68rem;font-weight:700;opacity:0.75;}
 
   /* ---------- Übersicht ---------- */
   .actions-row{display:flex;gap:10px;margin:4px 0 10px;flex-wrap:wrap;}
@@ -65,6 +66,7 @@
   .pill-btn.reset{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line);box-shadow:none;}
   .pill-btn.mallorca{background:var(--oro);color:var(--rojo-dark);}
   .pill-btn.full{width:100%;justify-content:center;}
+  .pill-btn.half{flex:1;justify-content:center;padding:11px 8px;font-size:0.88rem;}
 
   .grid{
     display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
@@ -125,6 +127,7 @@
     font-size:1.15rem;color:var(--ink-soft);font-weight:700;
     min-height:1.6em;
   }
+  .reveal-hint{font-size:0.78rem;color:var(--ink-soft);font-weight:700;opacity:0.7;margin-top:2px;}
 
   .speak-btn{
     border:none;background:var(--azul);color:#fff;width:54px;height:54px;border-radius:50%;
@@ -230,10 +233,11 @@
 
   <header class="top">
     <div class="flag-dot">🇪🇸</div>
-    <div>
+    <div class="header-center">
       <h1>¡Español para ti!</h1>
-      <p>Spanisch lernen – Begrüßung, Reisen &amp; Alltag</p>
+      <p class="version-tag">Version 1.2.7</p>
     </div>
+    <div class="flag-dot">🇪🇸</div>
   </header>
 
   <!-- ÜBERSICHT -->
@@ -242,8 +246,9 @@
     <div class="actions-row" style="margin-top:12px;">
       <button class="pill-btn quiz full" id="btn-start-quiz">🏆 Spanisch-Quiz</button>
     </div>
-    <div class="actions-row" style="margin-top:6px;">
-      <button class="pill-btn mallorca full" id="btn-open-mallorca">🏝️ Mallorca-Tipps</button>
+    <div class="actions-row" style="margin-top:6px;gap:8px;">
+      <button class="pill-btn mallorca half" id="btn-open-sprachtipps">💬 Sprachtipps</button>
+      <button class="pill-btn mallorca half" id="btn-open-mallorca">🏝️ Mallorca-Tipps</button>
     </div>
   </section>
 
@@ -271,6 +276,7 @@
       <div class="card-es" id="card-es">Hola</div>
       <button class="speak-btn" id="btn-speak" title="Vorlesen">🔊</button>
       <div class="card-de" id="card-de">Hallo</div>
+      <div class="reveal-hint">👉 Antippen für die nächste Redewendung</div>
     </div>
     <div class="nav-row">
       <button class="nav-btn prev" id="btn-prev">← Zurück</button>
@@ -306,7 +312,7 @@
 
 <footer>
   <button id="btn-impressum">Impressum</button>
-  <span class="footer-copy">© 2026 v.1.27</span>
+  <span class="footer-copy">© 2026</span>
   <button id="btn-datenschutz">Datenschutz</button>
 </footer>
 
@@ -315,9 +321,11 @@
     <h2>Impressum</h2>
     <p><strong>Angaben gemäß § 5 TMG</strong><br>
     Diese App ist ein privates, nicht-kommerzielles Lernprojekt und dient ausschließlich dem persönlichen Sprachenlernen im Familienkreis.</p>
-    <p><strong>Verantwortlich für den Inhalt:</strong><br>Katharina Schütz<br>Potsdam, Deutschland</p>
-    <p><strong>© Katharina Schütz, 2026. Alle Rechte vorbehalten.</strong></p>
-    <p><strong>Hinweis: Testversion 1.2.7</strong><br>
+    <p><strong>Verantwortlich für den Inhalt:</strong><br><span style="white-space:nowrap;">Katharina Schütz</span><br>Potsdam, Deutschland</p>
+    <p><strong>© <span style="white-space:nowrap;">Katharina Schütz</span>, 2026. Alle Rechte vorbehalten.</strong></p>
+    <p><strong>Werbefrei &amp; kostenlos</strong><br>
+    Diese App ist vollständig werbefrei. Es bestehen keinerlei Verträge oder Kooperationen mit Werbe- oder Analysefirmen, es werden keine Daten zu Werbezwecken verkauft oder weitergegeben. Die App ist ein rein privates Lernprogramm, das die Entwicklerin bewusst kostenlos und ohne Finanzierung durch Dritte zur Verfügung stellt.</p>
+    <p><strong>Hinweis: Testversion</strong><br>
     Dies ist eine Testversion, die noch nicht vollständig geprüft wurde. Eine Weitergabe an Dritte ist nur mit ausdrücklicher Genehmigung der Entwicklerin gestattet.</p>
     <p><strong>Hinweis zur Erstellung mithilfe Künstlicher Intelligenz:</strong><br>
     Diese App wurde mithilfe von Künstlicher Intelligenz (u.&nbsp;a. Google Gemini, Anthropic Claude und OpenAI ChatGPT) erstellt. Inhalte, Übersetzungen und Vokabeln wurden KI-gestützt zusammengestellt. Eine KI kann trotz sorgfältiger Prüfung Fehler machen – bitte prüfen Sie wichtige Übersetzungen im Zweifel zusätzlich selbst, z.&nbsp;B. mit einem Wörterbuch.</p>
@@ -326,14 +334,35 @@
 
 <div class="modal-overlay" id="modal-datenschutz">
   <div class="modal-box">
-    <h2>Datenschutz</h2>
-    <p>Diese App speichert Ihren Lernfortschritt ausschließlich lokal auf Ihrem eigenen Gerät (im Browser-Speicher). Es werden keine Daten an einen Server übertragen, keine Cookies zu Werbezwecken gesetzt und keine personenbezogenen Daten erhoben oder weitergegeben.</p>
-    <p>Die Sprachausgabe nutzt die im Browser eingebaute Sprachfunktion (Web Speech API) Ihres Geräts.</p>
+    <h2>Datenschutzerklärung</h2>
+    <p><strong>1. Verantwortlicher</strong><br>
+    Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) ist <span style="white-space:nowrap;">Katharina Schütz</span>, Potsdam, Deutschland (siehe Impressum).</p>
+
+    <p><strong>2. Keine Erhebung personenbezogener Daten</strong><br>
+    Diese App verarbeitet und überträgt keinerlei personenbezogene Daten. Es findet keine Registrierung, keine Anmeldung und keine Eingabe von Namen, E-Mail-Adressen oder ähnlichen Angaben statt.</p>
+
+    <p><strong>3. Keine Server-Übertragung</strong><br>
+    Die App läuft vollständig im Browser Ihres Geräts. Es besteht keine Verbindung zu einem Server, an den Daten gesendet werden. Ihr Lernfortschritt (welche Karten Sie bereits angesehen haben) wird ausschließlich lokal im Speicher Ihres Browsers (localStorage) auf Ihrem eigenen Gerät abgelegt und verlässt dieses Gerät nicht.</p>
+
+    <p><strong>4. Keine Cookies, kein Tracking</strong><br>
+    Es werden keine Cookies gesetzt – weder zu Werbezwecken noch zu Analysezwecken. Es findet kein Tracking, keine Analyse des Nutzungsverhaltens und keine Weitergabe an Dritte statt. Es werden keine Cookie-Banner benötigt, da technisch keine einwilligungspflichtigen Cookies zum Einsatz kommen.</p>
+
+    <p><strong>5. Sprachausgabe (Web Speech API)</strong><br>
+    Für die Aussprache der spanischen und deutschen Texte nutzt die App die im Browser bereits eingebaute Sprachfunktion (Web Speech API) Ihres Geräts. Diese Verarbeitung erfolgt lokal auf dem Gerät bzw. über die vom Betriebssystem/Browser bereitgestellte Funktion – es werden dabei keine Texte durch die App selbst an einen eigenen Server übermittelt.</p>
+
+    <p><strong>6. Keine Weitergabe an Dritte</strong><br>
+    Es erfolgt keine Weitergabe, kein Verkauf und kein Austausch von Daten mit Dritten, da die App keine Daten erhebt, die weitergegeben werden könnten.</p>
+
+    <p><strong>7. Ihre Rechte</strong><br>
+    Da keine personenbezogenen Daten gespeichert werden, entfallen praktisch die datenschutzrechtlichen Auskunfts-, Berichtigungs- und Löschungsansprüche. Möchten Sie dennoch den lokal gespeicherten Lernfortschritt löschen, genügt es, die Browserdaten (localStorage) für diese Seite in den Einstellungen Ihres Browsers zu löschen.</p>
+
+    <p><strong>8. Kontakt</strong><br>
+    Bei Fragen zum Datenschutz wenden Sie sich bitte an die im Impressum genannte verantwortliche Person.</p>
   </div>
 </div>
 
 <script>
-const CATEGORIES = [{"id": "begruessung", "name": "Begrüßung", "icon": "👋", "cards": [{"es": "Hola", "de": "Hallo"}, {"es": "Buenos días", "de": "Guten Morgen"}, {"es": "Buenas tardes", "de": "Guten Tag"}, {"es": "Buenas noches", "de": "Gute Nacht"}, {"es": "Adiós", "de": "Auf Wiedersehen"}, {"es": "Hasta luego", "de": "Bis später"}, {"es": "Hasta mañana", "de": "Bis morgen"}, {"es": "¿Cómo estás?", "de": "Wie geht es dir?"}, {"es": "Estoy bien, gracias", "de": "Mir geht es gut, danke"}, {"es": "¿Y tú?", "de": "Und dir?"}, {"es": "Mucho gusto", "de": "Freut mich"}, {"es": "¿Cómo te llamas?", "de": "Wie heißt du?"}, {"es": "Me llamo Ana", "de": "Ich heiße Ana"}, {"es": "¿De dónde eres?", "de": "Woher kommst du?"}, {"es": "Soy de Alemania", "de": "Ich komme aus Deutschland"}, {"es": "Por favor", "de": "Bitte"}, {"es": "Gracias", "de": "Danke"}, {"es": "De nada", "de": "Gern geschehen"}, {"es": "Perdón", "de": "Entschuldigung"}, {"es": "Lo siento", "de": "Es tut mir leid"}]}, {"id": "reisen", "name": "Reisen", "icon": "✈️", "cards": [{"es": "El viaje", "de": "Die Reise"}, {"es": "La maleta", "de": "Der Koffer"}, {"es": "El pasaporte", "de": "Der Reisepass"}, {"es": "El billete", "de": "Das Ticket"}, {"es": "¿Dónde está...?", "de": "Wo ist...?"}, {"es": "¿Cuánto cuesta?", "de": "Wie viel kostet das?"}, {"es": "El hotel", "de": "Das Hotel"}, {"es": "La habitación", "de": "Das Zimmer"}, {"es": "Una habitación doble", "de": "Ein Doppelzimmer"}, {"es": "El mapa", "de": "Die Karte"}, {"es": "La estación", "de": "Der Bahnhof"}, {"es": "El tren", "de": "Der Zug"}, {"es": "El autobús", "de": "Der Bus"}, {"es": "El taxi", "de": "Das Taxi"}, {"es": "¿A qué hora sale?", "de": "Wann fährt es ab?"}, {"es": "Necesito ayuda", "de": "Ich brauche Hilfe"}, {"es": "Estoy perdido", "de": "Ich habe mich verlaufen"}, {"es": "La playa", "de": "Der Strand"}, {"es": "Las vacaciones", "de": "Der Urlaub"}, {"es": "Buen viaje", "de": "Gute Reise"}]}, {"id": "schule", "name": "Schule", "icon": "🎒", "cards": [{"es": "La escuela", "de": "Die Schule"}, {"es": "El profesor", "de": "Der Lehrer"}, {"es": "El alumno", "de": "Der Schüler"}, {"es": "La clase", "de": "Der Unterricht"}, {"es": "El libro", "de": "Das Buch"}, {"es": "El cuaderno", "de": "Das Heft"}, {"es": "El lápiz", "de": "Der Bleistift"}, {"es": "La mochila", "de": "Der Schulrucksack"}, {"es": "La pizarra", "de": "Die Tafel"}, {"es": "La tarea", "de": "Die Hausaufgabe"}, {"es": "El examen", "de": "Die Prüfung"}, {"es": "Aprender", "de": "Lernen"}, {"es": "Estudiar", "de": "Studieren"}, {"es": "Escribir", "de": "Schreiben"}, {"es": "Leer", "de": "Lesen"}, {"es": "El recreo", "de": "Die Pause"}, {"es": "La biblioteca", "de": "Die Bibliothek"}, {"es": "El horario", "de": "Der Stundenplan"}, {"es": "La asignatura", "de": "Das Schulfach"}, {"es": "Buena suerte en el examen", "de": "Viel Glück bei der Prüfung"}]}, {"id": "post", "name": "Post", "icon": "✉️", "cards": [{"es": "La oficina de correos", "de": "Die Post"}, {"es": "La carta", "de": "Der Brief"}, {"es": "El sobre", "de": "Der Umschlag"}, {"es": "El sello", "de": "Die Briefmarke"}, {"es": "El paquete", "de": "Das Paket"}, {"es": "El buzón", "de": "Der Briefkasten"}, {"es": "La dirección", "de": "Die Adresse"}, {"es": "Enviar", "de": "Senden"}, {"es": "Recibir", "de": "Empfangen"}, {"es": "¿Cuánto cuesta enviar esto?", "de": "Wie viel kostet der Versand?"}, {"es": "Quiero enviar esta carta a Alemania", "de": "Ich möchte diesen Brief nach Deutschland schicken"}, {"es": "El código postal", "de": "Die Postleitzahl"}, {"es": "Correo urgente", "de": "Eilpost"}, {"es": "La postal", "de": "Die Postkarte"}, {"es": "La ventanilla", "de": "Der Schalter"}, {"es": "Hacer cola", "de": "Schlange stehen"}, {"es": "El formulario", "de": "Das Formular"}, {"es": "Frágil", "de": "Zerbrechlich"}, {"es": "El peso", "de": "Das Gewicht"}, {"es": "La entrega", "de": "Die Zustellung"}]}, {"id": "stadt", "name": "Stadt", "icon": "🏙️", "cards": [{"es": "La ciudad", "de": "Die Stadt"}, {"es": "La calle", "de": "Die Straße"}, {"es": "La plaza", "de": "Der Platz"}, {"es": "El parque", "de": "Der Park"}, {"es": "El museo", "de": "Das Museum"}, {"es": "La iglesia", "de": "Die Kirche"}, {"es": "El mercado", "de": "Der Markt"}, {"es": "La tienda", "de": "Das Geschäft"}, {"es": "El restaurante", "de": "Das Restaurant"}, {"es": "El semáforo", "de": "Die Ampel"}, {"es": "El puente", "de": "Die Brücke"}, {"es": "El edificio", "de": "Das Gebäude"}, {"es": "¿Cómo llego a...?", "de": "Wie komme ich zu...?"}, {"es": "Todo recto", "de": "Geradeaus"}, {"es": "A la derecha", "de": "Nach rechts"}, {"es": "A la izquierda", "de": "Nach links"}, {"es": "Cerca de", "de": "In der Nähe von"}, {"es": "Lejos de", "de": "Weit weg von"}, {"es": "El centro", "de": "Das Zentrum"}, {"es": "Perderse", "de": "Sich verlaufen"}]}, {"id": "land", "name": "Land", "icon": "🌄", "cards": [{"es": "El campo", "de": "Das Land"}, {"es": "El pueblo", "de": "Das Dorf"}, {"es": "La montaña", "de": "Der Berg"}, {"es": "El río", "de": "Der Fluss"}, {"es": "El bosque", "de": "Der Wald"}, {"es": "El lago", "de": "Der See"}, {"es": "La granja", "de": "Der Bauernhof"}, {"es": "El árbol", "de": "Der Baum"}, {"es": "La flor", "de": "Die Blume"}, {"es": "El sendero", "de": "Der Wanderweg"}, {"es": "Dar un paseo", "de": "Spazieren gehen"}, {"es": "El animal", "de": "Das Tier"}, {"es": "La vaca", "de": "Die Kuh"}, {"es": "El caballo", "de": "Das Pferd"}, {"es": "El sol", "de": "Die Sonne"}, {"es": "La colina", "de": "Der Hügel"}, {"es": "El valle", "de": "Das Tal"}, {"es": "La naturaleza", "de": "Die Natur"}, {"es": "El camino", "de": "Der Weg"}, {"es": "Qué paisaje tan bonito", "de": "Was für eine schöne Landschaft"}]}, {"id": "flughafen", "name": "Flughafen", "icon": "🛫", "cards": [{"es": "El aeropuerto", "de": "Der Flughafen"}, {"es": "El vuelo", "de": "Der Flug"}, {"es": "La puerta de embarque", "de": "Das Gate"}, {"es": "La tarjeta de embarque", "de": "Die Bordkarte"}, {"es": "El equipaje de mano", "de": "Das Handgepäck"}, {"es": "Facturar el equipaje", "de": "Das Gepäck einchecken"}, {"es": "El control de seguridad", "de": "Die Sicherheitskontrolle"}, {"es": "La aduana", "de": "Der Zoll"}, {"es": "El pasajero", "de": "Der Passagier"}, {"es": "Despegar", "de": "Starten"}, {"es": "Aterrizar", "de": "Landen"}, {"es": "El retraso", "de": "Die Verspätung"}, {"es": "Cancelado", "de": "Storniert"}, {"es": "La llegada", "de": "Die Ankunft"}, {"es": "La salida del vuelo", "de": "Der Abflug"}, {"es": "¿Dónde está la recogida de equipajes?", "de": "Wo ist die Gepäckausgabe?"}, {"es": "El asiento", "de": "Der Sitzplatz"}, {"es": "Abrocharse el cinturón", "de": "Den Gurt anschnallen"}, {"es": "La escala", "de": "Der Zwischenstopp"}, {"es": "Buen vuelo", "de": "Guten Flug"}]}, {"id": "auto", "name": "Auto", "icon": "🚗", "cards": [{"es": "El coche", "de": "Das Auto"}, {"es": "Alquilar un coche", "de": "Ein Auto mieten"}, {"es": "El carné de conducir", "de": "Der Führerschein"}, {"es": "El seguro", "de": "Die Versicherung"}, {"es": "La gasolina", "de": "Das Benzin"}, {"es": "La gasolinera", "de": "Die Tankstelle"}, {"es": "Llenar el depósito", "de": "Volltanken"}, {"es": "El aparcamiento", "de": "Der Parkplatz"}, {"es": "Aparcar", "de": "Parken"}, {"es": "El cinturón de seguridad", "de": "Der Sicherheitsgurt"}, {"es": "El volante", "de": "Das Lenkrad"}, {"es": "Los frenos", "de": "Die Bremsen"}, {"es": "La avería", "de": "Die Panne"}, {"es": "El límite de velocidad", "de": "Das Tempolimit"}, {"es": "La autopista", "de": "Die Autobahn"}, {"es": "La carretera", "de": "Die Landstraße"}, {"es": "Girar a la derecha", "de": "Rechts abbiegen"}, {"es": "Girar a la izquierda", "de": "Links abbiegen"}, {"es": "El maletero", "de": "Der Kofferraum"}, {"es": "Conduce con cuidado", "de": "Fahr vorsichtig"}]}, {"id": "kueche", "name": "Küche", "icon": "🍳", "cards": [{"es": "La cocina", "de": "Die Küche"}, {"es": "El frigorífico", "de": "Der Kühlschrank"}, {"es": "El horno", "de": "Der Backofen"}, {"es": "La olla", "de": "Der Topf"}, {"es": "La sartén", "de": "Die Pfanne"}, {"es": "El plato", "de": "Der Teller"}, {"es": "El vaso", "de": "Das Glas"}, {"es": "La taza", "de": "Die Tasse"}, {"es": "El cuchillo", "de": "Das Messer"}, {"es": "El tenedor", "de": "Die Gabel"}, {"es": "La cuchara", "de": "Der Löffel"}, {"es": "Cocinar", "de": "Kochen"}, {"es": "Freír", "de": "Braten"}, {"es": "Cortar", "de": "Schneiden"}, {"es": "Lavar los platos", "de": "Das Geschirr spülen"}, {"es": "La mesa", "de": "Der Tisch"}, {"es": "La silla", "de": "Der Stuhl"}, {"es": "El microondas", "de": "Die Mikrowelle"}, {"es": "La receta", "de": "Das Rezept"}, {"es": "Buen provecho", "de": "Guten Appetit"}]}, {"id": "wohnzimmer", "name": "Wohnzimmer", "icon": "🛋️", "cards": [{"es": "El salón", "de": "Das Wohnzimmer"}, {"es": "El sofá", "de": "Das Sofa"}, {"es": "El sillón", "de": "Der Sessel"}, {"es": "La mesa de centro", "de": "Der Couchtisch"}, {"es": "La televisión", "de": "Der Fernseher"}, {"es": "La lámpara", "de": "Die Lampe"}, {"es": "La alfombra", "de": "Der Teppich"}, {"es": "La estantería", "de": "Das Regal"}, {"es": "La ventana", "de": "Das Fenster"}, {"es": "La cortina", "de": "Der Vorhang"}, {"es": "El cuadro", "de": "Das Bild"}, {"es": "Relajarse", "de": "Sich entspannen"}, {"es": "Ver la televisión", "de": "Fernsehen"}, {"es": "Sentarse", "de": "Sich setzen"}, {"es": "El mando a distancia", "de": "Die Fernbedienung"}, {"es": "Cómodo", "de": "Bequem"}, {"es": "Acogedor", "de": "Gemütlich"}, {"es": "La planta", "de": "Die Pflanze"}, {"es": "La puerta", "de": "Die Tür"}, {"es": "Recibir visita", "de": "Besuch empfangen"}]}, {"id": "koerper", "name": "Körper", "icon": "🧍", "cards": [{"es": "La cabeza", "de": "Der Kopf"}, {"es": "El pelo", "de": "Die Haare"}, {"es": "La cara", "de": "Das Gesicht"}, {"es": "Los ojos", "de": "Die Augen"}, {"es": "La nariz", "de": "Die Nase"}, {"es": "La boca", "de": "Der Mund"}, {"es": "Las orejas", "de": "Die Ohren"}, {"es": "El cuello", "de": "Der Hals"}, {"es": "El brazo", "de": "Der Arm"}, {"es": "La mano", "de": "Die Hand"}, {"es": "Los dedos", "de": "Die Finger"}, {"es": "La espalda", "de": "Der Rücken"}, {"es": "La pierna", "de": "Das Bein"}, {"es": "La rodilla", "de": "Das Knie"}, {"es": "El pie", "de": "Der Fuß"}, {"es": "El corazón", "de": "Das Herz"}, {"es": "Me duele la cabeza", "de": "Mir tut der Kopf weh"}, {"es": "Me duele el estómago", "de": "Mir tut der Bauch weh"}, {"es": "Tengo frío", "de": "Mir ist kalt"}, {"es": "Tengo calor", "de": "Mir ist heiß"}]}, {"id": "zahlen", "name": "Zahlen", "icon": "🔢", "cards": [{"es": "Uno", "de": "Eins"}, {"es": "Dos", "de": "Zwei"}, {"es": "Tres", "de": "Drei"}, {"es": "Cuatro", "de": "Vier"}, {"es": "Cinco", "de": "Fünf"}, {"es": "Seis", "de": "Sechs"}, {"es": "Siete", "de": "Sieben"}, {"es": "Ocho", "de": "Acht"}, {"es": "Nueve", "de": "Neun"}, {"es": "Diez", "de": "Zehn"}, {"es": "Once", "de": "Elf"}, {"es": "Doce", "de": "Zwölf"}, {"es": "Quince", "de": "Fünfzehn"}, {"es": "Veinte", "de": "Zwanzig"}, {"es": "Treinta", "de": "Dreißig"}, {"es": "Cincuenta", "de": "Fünfzig"}, {"es": "Cien", "de": "Hundert"}, {"es": "Mil", "de": "Tausend"}, {"es": "El número", "de": "Die Zahl"}, {"es": "¿Cuántos años tienes?", "de": "Wie alt bist du?"}]}, {"id": "farben", "name": "Farben", "icon": "🎨", "cards": [{"es": "Rojo", "de": "Rot"}, {"es": "Azul", "de": "Blau"}, {"es": "Amarillo", "de": "Gelb"}, {"es": "Verde", "de": "Grün"}, {"es": "Naranja", "de": "Orange"}, {"es": "Morado", "de": "Lila"}, {"es": "Rosa", "de": "Rosa"}, {"es": "Blanco", "de": "Weiß"}, {"es": "Negro", "de": "Schwarz"}, {"es": "Gris", "de": "Grau"}, {"es": "Marrón", "de": "Braun"}, {"es": "Claro", "de": "Hell"}, {"es": "Oscuro", "de": "Dunkel"}, {"es": "¿De qué color es?", "de": "Welche Farbe hat das?"}, {"es": "Mi color favorito es...", "de": "Meine Lieblingsfarbe ist..."}, {"es": "El cielo es azul", "de": "Der Himmel ist blau"}, {"es": "La hierba es verde", "de": "Das Gras ist grün"}, {"es": "Multicolor", "de": "Bunt"}, {"es": "La bandera", "de": "Die Flagge"}, {"es": "El color", "de": "Die Farbe"}]}, {"id": "essen", "name": "Essen & Trinken", "icon": "🍽️", "cards": [{"es": "El pan", "de": "Das Brot"}, {"es": "El agua", "de": "Das Wasser"}, {"es": "El vino", "de": "Der Wein"}, {"es": "La fruta", "de": "Das Obst"}, {"es": "La manzana", "de": "Der Apfel"}, {"es": "La verdura", "de": "Das Gemüse"}, {"es": "La carne", "de": "Das Fleisch"}, {"es": "El pescado", "de": "Der Fisch"}, {"es": "El queso", "de": "Der Käse"}, {"es": "El huevo", "de": "Das Ei"}, {"es": "La sopa", "de": "Die Suppe"}, {"es": "La ensalada", "de": "Der Salat"}, {"es": "El desayuno", "de": "Das Frühstück"}, {"es": "El almuerzo", "de": "Das Mittagessen"}, {"es": "La cena", "de": "Das Abendessen"}, {"es": "Tengo hambre", "de": "Ich habe Hunger"}, {"es": "Tengo sed", "de": "Ich habe Durst"}, {"es": "Está delicioso", "de": "Es ist köstlich"}, {"es": "La cuenta, por favor", "de": "Die Rechnung, bitte"}, {"es": "Salud", "de": "Zum Wohl"}]}, {"id": "wetter", "name": "Wetter", "icon": "☀️", "cards": [{"es": "El tiempo", "de": "Das Wetter"}, {"es": "Hace sol", "de": "Es ist sonnig"}, {"es": "Hace calor", "de": "Es ist heiß"}, {"es": "Hace frío", "de": "Es ist kalt"}, {"es": "Llueve", "de": "Es regnet"}, {"es": "Nieva", "de": "Es schneit"}, {"es": "Hay viento", "de": "Es ist windig"}, {"es": "Está nublado", "de": "Es ist bewölkt"}, {"es": "La lluvia", "de": "Der Regen"}, {"es": "La nieve", "de": "Der Schnee"}, {"es": "El viento", "de": "Der Wind"}, {"es": "La nube", "de": "Die Wolke"}, {"es": "El paraguas", "de": "Der Regenschirm"}, {"es": "Hace buen tiempo", "de": "Es ist schönes Wetter"}, {"es": "Hace mal tiempo", "de": "Es ist schlechtes Wetter"}, {"es": "La temperatura", "de": "Die Temperatur"}, {"es": "El verano", "de": "Der Sommer"}, {"es": "El invierno", "de": "Der Winter"}, {"es": "La primavera", "de": "Der Frühling"}, {"es": "El otoño", "de": "Der Herbst"}]}, {"id": "zeit", "name": "Zeit", "icon": "⏰", "cards": [{"es": "La hora", "de": "Die Uhrzeit"}, {"es": "¿Qué hora es?", "de": "Wie spät ist es?"}, {"es": "Son las tres", "de": "Es ist drei Uhr"}, {"es": "El minuto", "de": "Die Minute"}, {"es": "El día", "de": "Der Tag"}, {"es": "La semana", "de": "Die Woche"}, {"es": "El mes", "de": "Der Monat"}, {"es": "El año", "de": "Das Jahr"}, {"es": "Hoy", "de": "Heute"}, {"es": "Mañana", "de": "Morgen"}, {"es": "Ayer", "de": "Gestern"}, {"es": "Ahora", "de": "Jetzt"}, {"es": "Más tarde", "de": "Später"}, {"es": "Pronto", "de": "Bald"}, {"es": "Siempre", "de": "Immer"}, {"es": "Nunca", "de": "Nie"}, {"es": "Temprano", "de": "Früh"}, {"es": "Tarde", "de": "Spät"}, {"es": "El fin de semana", "de": "Das Wochenende"}, {"es": "La noche", "de": "Die Nacht"}]}];
+const CATEGORIES = [{"id": "begruessung", "name": "Begrüßung", "icon": "👋", "cards": [{"es": "Hola", "de": "Hallo"}, {"es": "Buenos días", "de": "Guten Morgen"}, {"es": "Buenas tardes", "de": "Guten Tag"}, {"es": "Buenas noches", "de": "Gute Nacht"}, {"es": "Adiós", "de": "Auf Wiedersehen"}, {"es": "Hasta luego", "de": "Bis später"}, {"es": "Hasta mañana", "de": "Bis morgen"}, {"es": "¿Cómo estás?", "de": "Wie geht es dir?"}, {"es": "Estoy bien, gracias", "de": "Mir geht es gut, danke"}, {"es": "¿Y tú?", "de": "Und dir?"}, {"es": "Mucho gusto", "de": "Freut mich"}, {"es": "¿Cómo te llamas?", "de": "Wie heißt du?"}, {"es": "Me llamo Ana", "de": "Ich heiße Ana"}, {"es": "¿De dónde eres?", "de": "Woher kommst du?"}, {"es": "Soy de Alemania", "de": "Ich komme aus Deutschland"}, {"es": "Por favor", "de": "Bitte"}, {"es": "Gracias", "de": "Danke"}, {"es": "De nada", "de": "Gern geschehen"}, {"es": "Perdón", "de": "Entschuldigung"}, {"es": "Lo siento", "de": "Es tut mir leid"}]}, {"id": "reisen", "name": "Reisen", "icon": "✈️", "cards": [{"es": "El viaje", "de": "Die Reise"}, {"es": "La maleta", "de": "Der Koffer"}, {"es": "El pasaporte", "de": "Der Reisepass"}, {"es": "El billete", "de": "Das Ticket"}, {"es": "¿Dónde está...?", "de": "Wo ist...?"}, {"es": "¿Cuánto cuesta?", "de": "Wie viel kostet das?"}, {"es": "El hotel", "de": "Das Hotel"}, {"es": "La habitación", "de": "Das Zimmer"}, {"es": "Una habitación doble", "de": "Ein Doppelzimmer"}, {"es": "El mapa", "de": "Die Karte"}, {"es": "La estación", "de": "Der Bahnhof"}, {"es": "El tren", "de": "Der Zug"}, {"es": "El autobús", "de": "Der Bus"}, {"es": "El taxi", "de": "Das Taxi"}, {"es": "¿A qué hora sale?", "de": "Wann fährt es ab?"}, {"es": "Necesito ayuda", "de": "Ich brauche Hilfe"}, {"es": "Estoy perdido", "de": "Ich habe mich verlaufen"}, {"es": "La playa", "de": "Der Strand"}, {"es": "Las vacaciones", "de": "Der Urlaub"}, {"es": "Buen viaje", "de": "Gute Reise"}]}, {"id": "schule", "name": "Schule", "icon": "🎒", "cards": [{"es": "La escuela", "de": "Die Schule"}, {"es": "El profesor", "de": "Der Lehrer"}, {"es": "El alumno", "de": "Der Schüler"}, {"es": "La clase", "de": "Der Unterricht"}, {"es": "El libro", "de": "Das Buch"}, {"es": "El cuaderno", "de": "Das Heft"}, {"es": "El lápiz", "de": "Der Bleistift"}, {"es": "La mochila", "de": "Der Schulrucksack"}, {"es": "La pizarra", "de": "Die Tafel"}, {"es": "La tarea", "de": "Die Hausaufgabe"}, {"es": "El examen", "de": "Die Prüfung"}, {"es": "Aprender", "de": "Lernen"}, {"es": "Estudiar", "de": "Studieren"}, {"es": "Escribir", "de": "Schreiben"}, {"es": "Leer", "de": "Lesen"}, {"es": "El recreo", "de": "Die Pause"}, {"es": "La biblioteca", "de": "Die Bibliothek"}, {"es": "El horario", "de": "Der Stundenplan"}, {"es": "La asignatura", "de": "Das Schulfach"}, {"es": "Buena suerte en el examen", "de": "Viel Glück bei der Prüfung"}]}, {"id": "post", "name": "Post", "icon": "✉️", "cards": [{"es": "La oficina de correos", "de": "Die Post"}, {"es": "La carta", "de": "Der Brief"}, {"es": "El sobre", "de": "Der Umschlag"}, {"es": "El sello", "de": "Die Briefmarke"}, {"es": "El paquete", "de": "Das Paket"}, {"es": "El buzón", "de": "Der Briefkasten"}, {"es": "La dirección", "de": "Die Adresse"}, {"es": "Enviar", "de": "Senden"}, {"es": "Recibir", "de": "Empfangen"}, {"es": "¿Cuánto cuesta enviar esto?", "de": "Wie viel kostet der Versand?"}, {"es": "Quiero enviar esta carta a Alemania", "de": "Ich möchte diesen Brief nach Deutschland schicken"}, {"es": "El código postal", "de": "Die Postleitzahl"}, {"es": "Correo urgente", "de": "Eilpost"}, {"es": "La postal", "de": "Die Postkarte"}, {"es": "La ventanilla", "de": "Der Schalter"}, {"es": "Hacer cola", "de": "Schlange stehen"}, {"es": "El formulario", "de": "Das Formular"}, {"es": "Frágil", "de": "Zerbrechlich"}, {"es": "El peso", "de": "Das Gewicht"}, {"es": "La entrega", "de": "Die Zustellung"}]}, {"id": "stadt", "name": "Stadt", "icon": "🏙️", "cards": [{"es": "La ciudad", "de": "Die Stadt"}, {"es": "La calle", "de": "Die Straße"}, {"es": "La plaza", "de": "Der Platz"}, {"es": "El parque", "de": "Der Park"}, {"es": "El museo", "de": "Das Museum"}, {"es": "La iglesia", "de": "Die Kirche"}, {"es": "El mercado", "de": "Der Markt"}, {"es": "La tienda", "de": "Das Geschäft"}, {"es": "El restaurante", "de": "Das Restaurant"}, {"es": "El semáforo", "de": "Die Ampel"}, {"es": "El puente", "de": "Die Brücke"}, {"es": "El edificio", "de": "Das Gebäude"}, {"es": "¿Cómo llego a...?", "de": "Wie komme ich zu...?"}, {"es": "Todo recto", "de": "Geradeaus"}, {"es": "A la derecha", "de": "Nach rechts"}, {"es": "A la izquierda", "de": "Nach links"}, {"es": "Cerca de", "de": "In der Nähe von"}, {"es": "Lejos de", "de": "Weit weg von"}, {"es": "El centro", "de": "Das Zentrum"}, {"es": "Perderse", "de": "Sich verlaufen"}]}, {"id": "land", "name": "Land", "icon": "🌄", "cards": [{"es": "El campo", "de": "Das Land"}, {"es": "El pueblo", "de": "Das Dorf"}, {"es": "La montaña", "de": "Der Berg"}, {"es": "El río", "de": "Der Fluss"}, {"es": "El bosque", "de": "Der Wald"}, {"es": "El lago", "de": "Der See"}, {"es": "La granja", "de": "Der Bauernhof"}, {"es": "El árbol", "de": "Der Baum"}, {"es": "La flor", "de": "Die Blume"}, {"es": "El sendero", "de": "Der Wanderweg"}, {"es": "Dar un paseo", "de": "Spazieren gehen"}, {"es": "El animal", "de": "Das Tier"}, {"es": "La vaca", "de": "Die Kuh"}, {"es": "El caballo", "de": "Das Pferd"}, {"es": "El sol", "de": "Die Sonne"}, {"es": "La colina", "de": "Der Hügel"}, {"es": "El valle", "de": "Das Tal"}, {"es": "La naturaleza", "de": "Die Natur"}, {"es": "El camino", "de": "Der Weg"}, {"es": "Qué paisaje tan bonito", "de": "Was für eine schöne Landschaft"}]}, {"id": "flughafen", "name": "Flughafen", "icon": "🛫", "cards": [{"es": "El aeropuerto", "de": "Der Flughafen"}, {"es": "El vuelo", "de": "Der Flug"}, {"es": "La puerta de embarque", "de": "Das Gate"}, {"es": "La tarjeta de embarque", "de": "Die Bordkarte"}, {"es": "El equipaje de mano", "de": "Das Handgepäck"}, {"es": "Facturar el equipaje", "de": "Das Gepäck einchecken"}, {"es": "El control de seguridad", "de": "Die Sicherheitskontrolle"}, {"es": "La aduana", "de": "Der Zoll"}, {"es": "El pasajero", "de": "Der Passagier"}, {"es": "Despegar", "de": "Starten"}, {"es": "Aterrizar", "de": "Landen"}, {"es": "El retraso", "de": "Die Verspätung"}, {"es": "Cancelado", "de": "Storniert"}, {"es": "La llegada", "de": "Die Ankunft"}, {"es": "La salida del vuelo", "de": "Der Abflug"}, {"es": "¿Dónde está la recogida de equipajes?", "de": "Wo ist die Gepäckausgabe?"}, {"es": "El asiento", "de": "Der Sitzplatz"}, {"es": "Abrocharse el cinturón", "de": "Den Gurt anschnallen"}, {"es": "La escala", "de": "Der Zwischenstopp"}, {"es": "Buen vuelo", "de": "Guten Flug"}]}, {"id": "auto", "name": "Auto", "icon": "🚗", "cards": [{"es": "El coche", "de": "Das Auto"}, {"es": "Alquilar un coche", "de": "Ein Auto mieten"}, {"es": "El carné de conducir", "de": "Der Führerschein"}, {"es": "El seguro", "de": "Die Versicherung"}, {"es": "La gasolina", "de": "Das Benzin"}, {"es": "La gasolinera", "de": "Die Tankstelle"}, {"es": "Llenar el depósito", "de": "Volltanken"}, {"es": "El aparcamiento", "de": "Der Parkplatz"}, {"es": "Aparcar", "de": "Parken"}, {"es": "El cinturón de seguridad", "de": "Der Sicherheitsgurt"}, {"es": "El volante", "de": "Das Lenkrad"}, {"es": "Los frenos", "de": "Die Bremsen"}, {"es": "La avería", "de": "Die Panne"}, {"es": "El límite de velocidad", "de": "Das Tempolimit"}, {"es": "La autopista", "de": "Die Autobahn"}, {"es": "La carretera", "de": "Die Landstraße"}, {"es": "Girar a la derecha", "de": "Rechts abbiegen"}, {"es": "Girar a la izquierda", "de": "Links abbiegen"}, {"es": "El maletero", "de": "Der Kofferraum"}, {"es": "Conduce con cuidado", "de": "Fahr vorsichtig"}]}, {"id": "kueche", "name": "Küche", "icon": "🍳", "cards": [{"es": "La cocina", "de": "Die Küche"}, {"es": "El frigorífico", "de": "Der Kühlschrank"}, {"es": "El horno", "de": "Der Backofen"}, {"es": "La olla", "de": "Der Topf"}, {"es": "La sartén", "de": "Die Pfanne"}, {"es": "El plato", "de": "Der Teller"}, {"es": "El vaso", "de": "Das Glas"}, {"es": "La taza", "de": "Die Tasse"}, {"es": "El cuchillo", "de": "Das Messer"}, {"es": "El tenedor", "de": "Die Gabel"}, {"es": "La cuchara", "de": "Der Löffel"}, {"es": "Cocinar", "de": "Kochen"}, {"es": "Freír", "de": "Braten"}, {"es": "Cortar", "de": "Schneiden"}, {"es": "Lavar los platos", "de": "Das Geschirr spülen"}, {"es": "La mesa", "de": "Der Tisch"}, {"es": "La silla", "de": "Der Stuhl"}, {"es": "El microondas", "de": "Die Mikrowelle"}, {"es": "La receta", "de": "Das Rezept"}, {"es": "Buen provecho", "de": "Guten Appetit"}]}, {"id": "wohnzimmer", "name": "Wohnzimmer", "icon": "🛋️", "cards": [{"es": "El salón", "de": "Das Wohnzimmer"}, {"es": "El sofá", "de": "Das Sofa"}, {"es": "El sillón", "de": "Der Sessel"}, {"es": "La mesa de centro", "de": "Der Couchtisch"}, {"es": "La televisión", "de": "Der Fernseher"}, {"es": "La lámpara", "de": "Die Lampe"}, {"es": "La alfombra", "de": "Der Teppich"}, {"es": "La estantería", "de": "Das Regal"}, {"es": "La ventana", "de": "Das Fenster"}, {"es": "La cortina", "de": "Der Vorhang"}, {"es": "El cuadro", "de": "Das Bild"}, {"es": "Relajarse", "de": "Sich entspannen"}, {"es": "Ver la televisión", "de": "Fernsehen"}, {"es": "Sentarse", "de": "Sich setzen"}, {"es": "El mando a distancia", "de": "Die Fernbedienung"}, {"es": "Cómodo", "de": "Bequem"}, {"es": "Acogedor", "de": "Gemütlich"}, {"es": "La planta", "de": "Die Pflanze"}, {"es": "La puerta", "de": "Die Tür"}, {"es": "Recibir visita", "de": "Besuch empfangen"}]}, {"id": "koerper", "name": "Körper", "icon": "🧍", "cards": [{"es": "La cabeza", "de": "Der Kopf"}, {"es": "El pelo", "de": "Die Haare"}, {"es": "La cara", "de": "Das Gesicht"}, {"es": "Los ojos", "de": "Die Augen"}, {"es": "La nariz", "de": "Die Nase"}, {"es": "La boca", "de": "Der Mund"}, {"es": "Las orejas", "de": "Die Ohren"}, {"es": "El cuello", "de": "Der Hals"}, {"es": "El brazo", "de": "Der Arm"}, {"es": "La mano", "de": "Die Hand"}, {"es": "Los dedos", "de": "Die Finger"}, {"es": "La espalda", "de": "Der Rücken"}, {"es": "La pierna", "de": "Das Bein"}, {"es": "La rodilla", "de": "Das Knie"}, {"es": "El pie", "de": "Der Fuß"}, {"es": "El corazón", "de": "Das Herz"}, {"es": "Me duele la cabeza", "de": "Mir tut der Kopf weh"}, {"es": "Me duele el estómago", "de": "Mir tut der Bauch weh"}, {"es": "Tengo frío", "de": "Mir ist kalt"}, {"es": "Tengo calor", "de": "Mir ist heiß"}]}, {"id": "zahlen", "name": "Zahlen", "icon": "🔢", "cards": [{"es": "Uno", "de": "Eins"}, {"es": "Dos", "de": "Zwei"}, {"es": "Tres", "de": "Drei"}, {"es": "Cuatro", "de": "Vier"}, {"es": "Cinco", "de": "Fünf"}, {"es": "Seis", "de": "Sechs"}, {"es": "Siete", "de": "Sieben"}, {"es": "Ocho", "de": "Acht"}, {"es": "Nueve", "de": "Neun"}, {"es": "Diez", "de": "Zehn"}, {"es": "Once", "de": "Elf"}, {"es": "Doce", "de": "Zwölf"}, {"es": "Trece", "de": "Dreizehn"}, {"es": "Catorce", "de": "Vierzehn"}, {"es": "Quince", "de": "Fünfzehn"}, {"es": "Dieciséis", "de": "Sechzehn"}, {"es": "Diecisiete", "de": "Siebzehn"}, {"es": "Dieciocho", "de": "Achtzehn"}, {"es": "Diecinueve", "de": "Neunzehn"}, {"es": "Veinte", "de": "Zwanzig"}, {"es": "Treinta", "de": "Dreißig"}, {"es": "Cuarenta", "de": "Vierzig"}, {"es": "Cincuenta", "de": "Fünfzig"}, {"es": "Sesenta", "de": "Sechzig"}, {"es": "Setenta", "de": "Siebzig"}, {"es": "Ochenta", "de": "Achtzig"}, {"es": "Noventa", "de": "Neunzig"}, {"es": "Cien", "de": "Hundert"}, {"es": "Doscientos", "de": "Zweihundert"}, {"es": "Quinientos", "de": "Fünfhundert"}, {"es": "Mil", "de": "Tausend"}, {"es": "Un millón", "de": "Eine Million"}, {"es": "El número", "de": "Die Zahl"}, {"es": "¿Cuántos años tienes?", "de": "Wie alt bist du?"}, {"es": "Uno más uno son dos", "de": "Eins plus eins ist zwei"}, {"es": "Uno más dos son tres", "de": "Eins plus zwei ist drei"}, {"es": "Dos más dos son cuatro", "de": "Zwei plus zwei ist vier"}, {"es": "Dos más tres son cinco", "de": "Zwei plus drei ist fünf"}, {"es": "Tres más tres son seis", "de": "Drei plus drei ist sechs"}, {"es": "Tres más cuatro son siete", "de": "Drei plus vier ist sieben"}, {"es": "Cuatro más cuatro son ocho", "de": "Vier plus vier ist acht"}, {"es": "Cuatro más cinco son nueve", "de": "Vier plus fünf ist neun"}, {"es": "Cinco más cinco son diez", "de": "Fünf plus fünf ist zehn"}, {"es": "Cinco más seis son once", "de": "Fünf plus sechs ist elf"}, {"es": "Seis más seis son doce", "de": "Sechs plus sechs ist zwölf"}, {"es": "Seis más siete son trece", "de": "Sechs plus sieben ist dreizehn"}, {"es": "Siete más siete son catorce", "de": "Sieben plus sieben ist vierzehn"}, {"es": "Siete más ocho son quince", "de": "Sieben plus acht ist fünfzehn"}, {"es": "Ocho más ocho son dieciséis", "de": "Acht plus acht ist sechzehn"}, {"es": "Ocho más nueve son diecisiete", "de": "Acht plus neun ist siebzehn"}, {"es": "Nueve más nueve son dieciocho", "de": "Neun plus neun ist achtzehn"}, {"es": "Nueve más diez son diecinueve", "de": "Neun plus zehn ist neunzehn"}, {"es": "Diez más diez son veinte", "de": "Zehn plus zehn ist zwanzig"}, {"es": "Diez más veinte son treinta", "de": "Zehn plus zwanzig ist dreißig"}, {"es": "Veinte más veinte son cuarenta", "de": "Zwanzig plus zwanzig ist vierzig"}, {"es": "Veinte más treinta son cincuenta", "de": "Zwanzig plus dreißig ist fünfzig"}, {"es": "Treinta más treinta son sesenta", "de": "Dreißig plus dreißig ist sechzig"}, {"es": "Cuarenta más treinta son setenta", "de": "Vierzig plus dreißig ist siebzig"}, {"es": "Cincuenta más cincuenta son cien", "de": "Fünfzig plus fünfzig ist hundert"}]}, {"id": "farben", "name": "Farben", "icon": "🎨", "cards": [{"es": "Rojo", "de": "Rot"}, {"es": "Azul", "de": "Blau"}, {"es": "Amarillo", "de": "Gelb"}, {"es": "Verde", "de": "Grün"}, {"es": "Naranja", "de": "Orange"}, {"es": "Morado", "de": "Lila"}, {"es": "Rosa", "de": "Rosa"}, {"es": "Blanco", "de": "Weiß"}, {"es": "Negro", "de": "Schwarz"}, {"es": "Gris", "de": "Grau"}, {"es": "Marrón", "de": "Braun"}, {"es": "Claro", "de": "Hell"}, {"es": "Oscuro", "de": "Dunkel"}, {"es": "¿De qué color es?", "de": "Welche Farbe hat das?"}, {"es": "Mi color favorito es...", "de": "Meine Lieblingsfarbe ist..."}, {"es": "El cielo es azul", "de": "Der Himmel ist blau"}, {"es": "La hierba es verde", "de": "Das Gras ist grün"}, {"es": "Multicolor", "de": "Bunt"}, {"es": "La bandera", "de": "Die Flagge"}, {"es": "El color", "de": "Die Farbe"}]}, {"id": "essen", "name": "Essen", "icon": "🍽️", "cards": [{"es": "El pan", "de": "Das Brot"}, {"es": "El agua", "de": "Das Wasser"}, {"es": "El vino", "de": "Der Wein"}, {"es": "La fruta", "de": "Das Obst"}, {"es": "La manzana", "de": "Der Apfel"}, {"es": "La verdura", "de": "Das Gemüse"}, {"es": "La carne", "de": "Das Fleisch"}, {"es": "El pescado", "de": "Der Fisch"}, {"es": "El queso", "de": "Der Käse"}, {"es": "El huevo", "de": "Das Ei"}, {"es": "La sopa", "de": "Die Suppe"}, {"es": "La ensalada", "de": "Der Salat"}, {"es": "El desayuno", "de": "Das Frühstück"}, {"es": "El almuerzo", "de": "Das Mittagessen"}, {"es": "La cena", "de": "Das Abendessen"}, {"es": "Tengo hambre", "de": "Ich habe Hunger"}, {"es": "Tengo sed", "de": "Ich habe Durst"}, {"es": "Está delicioso", "de": "Es ist köstlich"}, {"es": "La cuenta, por favor", "de": "Die Rechnung, bitte"}, {"es": "Salud", "de": "Zum Wohl"}]}, {"id": "wetter", "name": "Wetter", "icon": "☀️", "cards": [{"es": "El tiempo", "de": "Das Wetter"}, {"es": "Hace sol", "de": "Es ist sonnig"}, {"es": "Hace calor", "de": "Es ist heiß"}, {"es": "Hace frío", "de": "Es ist kalt"}, {"es": "Llueve", "de": "Es regnet"}, {"es": "Nieva", "de": "Es schneit"}, {"es": "Hay viento", "de": "Es ist windig"}, {"es": "Está nublado", "de": "Es ist bewölkt"}, {"es": "La lluvia", "de": "Der Regen"}, {"es": "La nieve", "de": "Der Schnee"}, {"es": "El viento", "de": "Der Wind"}, {"es": "La nube", "de": "Die Wolke"}, {"es": "El paraguas", "de": "Der Regenschirm"}, {"es": "Hace buen tiempo", "de": "Es ist schönes Wetter"}, {"es": "Hace mal tiempo", "de": "Es ist schlechtes Wetter"}, {"es": "La temperatura", "de": "Die Temperatur"}, {"es": "El verano", "de": "Der Sommer"}, {"es": "El invierno", "de": "Der Winter"}, {"es": "La primavera", "de": "Der Frühling"}, {"es": "El otoño", "de": "Der Herbst"}]}, {"id": "zeit", "name": "Zeit", "icon": "⏰", "cards": [{"es": "La hora", "de": "Die Uhrzeit"}, {"es": "¿Qué hora es?", "de": "Wie spät ist es?"}, {"es": "Son las tres", "de": "Es ist drei Uhr"}, {"es": "El minuto", "de": "Die Minute"}, {"es": "El día", "de": "Der Tag"}, {"es": "La semana", "de": "Die Woche"}, {"es": "El mes", "de": "Der Monat"}, {"es": "El año", "de": "Das Jahr"}, {"es": "Hoy", "de": "Heute"}, {"es": "Mañana", "de": "Morgen"}, {"es": "Ayer", "de": "Gestern"}, {"es": "Ahora", "de": "Jetzt"}, {"es": "Más tarde", "de": "Später"}, {"es": "Pronto", "de": "Bald"}, {"es": "Siempre", "de": "Immer"}, {"es": "Nunca", "de": "Nie"}, {"es": "Temprano", "de": "Früh"}, {"es": "Tarde", "de": "Spät"}, {"es": "El fin de semana", "de": "Das Wochenende"}, {"es": "La noche", "de": "Die Nacht"}]}];
 </script>
 <script>
 /* ===== Zustand ===== */
@@ -459,8 +488,14 @@ function renderCard(){
 }
 
 document.getElementById('card-stage').addEventListener('click', (e) => {
-  if(e.target.id === 'btn-speak') return;
-  speak(currentCategory.cards[currentIndex].es);
+  if(e.target.closest('#btn-speak')) return;
+  if(currentIndex < currentCategory.cards.length - 1){
+    currentIndex++;
+    renderCard();
+  }else{
+    showScreen('screen-overview');
+    renderOverview();
+  }
 });
 
 document.getElementById('btn-speak').addEventListener('click', (e) => {
@@ -498,11 +533,15 @@ function buildQuizQuestions(){
   CATEGORIES.forEach(cat => {
     cat.cards.forEach(card => all.push({es: card.es, de: card.de, icon: cat.icon}));
   });
-  // Eine zufällige Karte pro Rubrik auswählen -> 16 Fragen, gleichmäßig verteilt
+  SPRACHTIPPS_CARDS.forEach(card => all.push({es: card.es, de: card.de, icon: '💬'}));
+
+  // Eine zufällige Karte pro Rubrik auswählen, plus eine aus den Sprachtipps
   const chosen = CATEGORIES.map(cat => {
     const card = cat.cards[Math.floor(Math.random()*cat.cards.length)];
     return {es: card.es, de: card.de, icon: cat.icon};
   });
+  const tippCard = SPRACHTIPPS_CARDS[Math.floor(Math.random()*SPRACHTIPPS_CARDS.length)];
+  chosen.push({es: tippCard.es, de: tippCard.de, icon: '💬'});
   shuffle(chosen);
   // Immer Spanisch -> Deutsch fragen, damit jede Frage zuverlässig vorgelesen wird
   return chosen.map(q => {
@@ -677,6 +716,61 @@ function playFanfare(){
   }catch(e){ /* Web Audio evtl. nicht verfügbar */ }
 }
 
+/* ===== Sprachtipps (eigene Lernkarten-Rubrik, per Button erreichbar) ===== */
+const SPRACHTIPPS_CARDS = [
+  {es:"Quisiera una mesa para dos, por favor", de:"Ich hätte gerne einen Tisch für zwei, bitte"},
+  {es:"Quisiera una mesa para tres personas", de:"Ich hätte gerne einen Tisch für drei Personen"},
+  {es:"¿Puedo reservar una mesa?", de:"Kann ich einen Tisch reservieren?"},
+  {es:"¿Tiene una mesa libre?", de:"Haben Sie einen freien Tisch?"},
+  {es:"La carta, por favor", de:"Die Speisekarte, bitte"},
+  {es:"¿Qué me recomienda?", de:"Was empfehlen Sie mir?"},
+  {es:"Quisiera un café con leche", de:"Ich hätte gerne einen Milchkaffee"},
+  {es:"Quisiera un capuchino", de:"Ich hätte gerne einen Cappuccino"},
+  {es:"Tres vasos de agua, por favor", de:"Drei Gläser Wasser, bitte"},
+  {es:"Un agua con gas, por favor", de:"Ein Sprudelwasser, bitte"},
+  {es:"Sin hielo, por favor", de:"Ohne Eis, bitte"},
+  {es:"¿Tienen menú del día?", de:"Gibt es ein Tagesmenü?"},
+  {es:"Soy alérgico a los frutos secos", de:"Ich bin allergisch gegen Nüsse"},
+  {es:"Está muy rico", de:"Das schmeckt sehr gut"},
+  {es:"La cuenta, por favor", de:"Die Rechnung, bitte"},
+  {es:"¿Se puede pagar con tarjeta?", de:"Kann man mit Karte zahlen?"},
+  {es:"¿Cuánto es en total?", de:"Wie viel macht das insgesamt?"},
+  {es:"Para llevar, por favor", de:"Zum Mitnehmen, bitte"},
+  {es:"¿Dónde está el baño?", de:"Wo ist die Toilette?"},
+  {es:"Disculpe, ¿puede ayudarme?", de:"Entschuldigung, können Sie mir helfen?"},
+  {es:"No entiendo", de:"Ich verstehe nicht"},
+  {es:"¿Puede repetirlo, por favor?", de:"Können Sie das bitte wiederholen?"},
+  {es:"Más despacio, por favor", de:"Langsamer, bitte"},
+  {es:"¿Habla usted alemán?", de:"Sprechen Sie Deutsch?"},
+  {es:"¿Dónde está la parada del tranvía?", de:"Wo ist die Straßenbahnhaltestelle?"},
+  {es:"¿Cómo llego a Puerto Sóller en tranvía?", de:"Wie komme ich mit der Straßenbahn nach Puerto Sóller?"},
+  {es:"Un billete para Puerto Sóller, por favor", de:"Ein Ticket nach Puerto Sóller, bitte"},
+  {es:"¿A qué hora sale el tranvía?", de:"Wann fährt die Straßenbahn ab?"},
+  {es:"¿Dónde está la catedral de Palma?", de:"Wo ist die Kathedrale von Palma?"},
+  {es:"¿Cómo se llega al casco antiguo?", de:"Wie kommt man in die Altstadt?"},
+  {es:"¿Está lejos de aquí?", de:"Ist das weit von hier?"},
+  {es:"¿Cuánto se tarda a pie?", de:"Wie lange dauert es zu Fuß?"},
+  {es:"Un billete de autobús, por favor", de:"Ein Busticket, bitte"},
+  {es:"¿Dónde puedo comprar billetes?", de:"Wo kann ich Tickets kaufen?"},
+  {es:"¿Dónde está la playa más cercana?", de:"Wo ist der nächste Strand?"},
+  {es:"¿Se puede alquilar una sombrilla?", de:"Kann man einen Sonnenschirm mieten?"},
+  {es:"¿Dónde hay una farmacia?", de:"Wo ist eine Apotheke?"},
+  {es:"Necesito un médico", de:"Ich brauche einen Arzt"},
+  {es:"¿Cuánto cuesta la entrada?", de:"Wie viel kostet der Eintritt?"},
+  {es:"Dos entradas, por favor", de:"Zwei Eintrittskarten, bitte"},
+  {es:"¿A qué hora abren?", de:"Wann öffnen Sie?"},
+  {es:"¿A qué hora cierran?", de:"Wann schließen Sie?"},
+  {es:"Que tenga un buen día", de:"Einen schönen Tag noch"},
+];
+
+function openSprachtipps(){
+  currentCategory = { id:'sprachtipps', name:'Sprachtipps', icon:'💬', cards: SPRACHTIPPS_CARDS };
+  currentIndex = 0;
+  showScreen('screen-cards');
+  renderCard();
+}
+document.getElementById('btn-open-sprachtipps').addEventListener('click', openSprachtipps);
+
 /* ===== Mallorca-Tipps (Einzelkarten, antippen = weiter) ===== */
 const MALLORCA_INFO = [
   { title: "📍 Lage & Größe", text: "Mallorca ist mit rund 3.640 km² die größte Insel der Balearen im westlichen Mittelmeer, umgeben von etwa 550 km Küste. Von Deutschland aus ist sie in gut 2 bis 2,5 Flugstunden erreichbar." },
@@ -689,6 +783,13 @@ const MALLORCA_INFO = [
   { title: "🌊 Strände im Süden bei Palma", text: "Nur eine kurze Fahrt von Palma entfernt locken feine Sandstrände: Es Trenc mit türkisfarbenem Wasser und Karibik-Flair, die belebte Playa de Palma und die kleine, fjordartige Bucht Cala Pi." },
   { title: "🍽️ Kulinarische Spezialitäten", text: "Typisch mallorquinisch sind die süße Ensaimada, die würzige Streichwurst Sobrasada, Pa amb oli (Brot mit Olivenöl und Tomate) sowie der herzhafte Gemüseeintopf Tumbet." },
   { title: "📸 Was man gesehen haben sollte", text: "Die Kathedrale La Seu in Palma, die Tropfsteinhöhlen Cuevas del Drach bei Porto Cristo, die Steilküste am Kap Formentor und ein gemütlicher Bummel durch die Altstadt von Palma." },
+  { title: "🏰 Castell de Bellver", text: "Die gotische Burg mit rundem Grundriss liegt auf einem Hügel oberhalb von Palma und bietet einen fantastischen Blick über die Bucht. Heute beherbergt sie ein kleines Stadtmuseum." },
+  { title: "🐉 Cuevas del Drach", text: "Bei Porto Cristo im Osten der Insel liegen beeindruckende Tropfsteinhöhlen mit einem der größten unterirdischen Seen Europas – dort finden sogar kleine Live-Konzerte auf dem Wasser statt." },
+  { title: "🚂 Tren de Sóller", text: "Die historische Holzbahn von 1912 fährt von Palma durch die Berge nach Sóller, vorbei an Orangenhainen und durch enge Tunnel. Von Sóller geht es mit der alten Straßenbahn weiter zum Hafen Port de Sóller." },
+  { title: "🌅 Kap Formentor", text: "Der nördlichste Punkt der Insel begeistert mit einer spektakulären Steilküste, engen Serpentinenstraßen und einem Leuchtturm mit weitem Blick übers Meer." },
+  { title: "🎉 Palma bei Nacht", text: "Die Altstadt von Palma und das Viertel Santa Catalina laden abends zum Bummeln, Tapas essen und gemütlichem Verweilen in kleinen Bars ein." },
+  { title: "🚴 Aktiv sein", text: "Auf Mallorca lässt es sich wunderbar wandern, Rad fahren, schnorcheln oder segeln – die Insel ist bei Radsportlern aus ganz Europa für ihre Trainingsstrecken bekannt." },
+  { title: "💶 Praktische Reiseinfos", text: "Währung: Euro. Zeitzone: wie Deutschland (MEZ). Trinkgeld von etwa 5–10 % ist in Restaurants üblich. Steckdosen entsprechen dem europäischen Standard." },
 ];
 let mallorcaIndex = 0;
 
